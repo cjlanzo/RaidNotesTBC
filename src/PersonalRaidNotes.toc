@@ -1,0 +1,7 @@
+## Interface: 20503
+## Title: PersonalRaidNotes
+## Version: 1.0.0
+## Notes: An addon for managing personal raid notes
+## Author: Voodoomoose
+## SavedVariables: personal_raid_notes
+PersonalRaidNotes.lua
