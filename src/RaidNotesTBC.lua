@@ -7,7 +7,7 @@ function RaidNotes:OnInitialize()
 	-- self:db = _G.LibStub("AceDB-3.0")
 
 	self:Print("Welcome to RaidNotesTBC")
-	RaidNotes:Show_Notes()
+	RaidNotes:Show_Journal()
 
 	-- self:DrawMinimapIcon()
 end
