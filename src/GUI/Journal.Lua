@@ -14,45 +14,38 @@ function RaidNotes:Init_Journal()
     f:SetTitle(ADDON_NAME)
     _G[ADDON_NAME.."_MainFrame"] = f
 
-    local sideBar = AceGUI:Create("InlineGroup")
-    sideBar:SetWidth(220)
-    sideBar:SetTitle("Raids")
+    local tree = {
+        {
+            value = "A",
+            text = "Alpha",
+            children = {
+                {
+                    value = "D",
+                    text = "Delta"
+                }
+            }
+        },
+        {
+            value = "B",
+            text = "Bravo"
+        }
+    }
 
-    RaidNotes:CreateRaidButton(sideBar, "Testing")
-    RaidNotes:CreateRaidButton(sideBar, "Karazhan")
-    RaidNotes:CreateRaidButton(sideBar, "Serpentshrine Cavern")
-    RaidNotes:CreateRaidButton(sideBar, "Gruul's Lair")
-    RaidNotes:CreateRaidButton(sideBar, "Magtheridon's Lair")
-    RaidNotes:CreateRaidButton(sideBar, "Tempest Keep")
-    RaidNotes:CreateRaidButton(sideBar, "Mount Hyjal")
-    RaidNotes:CreateRaidButton(sideBar, "Black Temple")
-    RaidNotes:CreateRaidButton(sideBar, "The Sunwell")
-    
-    f:AddChild(sideBar)
+    local treeGroup = AceGUI:Create("TreeGroup")
+    treeGroup:SetFullWidth(true)
+    treeGroup:SetFullHeight(true)
+    treeGroup:SetTree(tree)
+    f:AddChild(treeGroup)
 
-    local notesPane = AceGUI:Create("InlineGroup")
-    notesPane:SetWidth(600)
-    notesPane:SetTitle("Notes")
-
-    RaidNotes:CreateNotesEdit(notesPane, "Trash")
-    RaidNotes:CreateNotesEdit(notesPane, "Boss")
-
-    f:AddChild(notesPane)
-end
-
-function RaidNotes:CreateRaidButton(parent, raidName)
-    btn = AceGUI:Create("Button")
-    btn:SetRelativeWidth(1)
-    btn:SetHeight(40)
-    btn:SetText(raidName)
-    parent:AddChild(btn)
+    RaidNotes:CreateNotesEdit(treeGroup, "Trash")
+    RaidNotes:CreateNotesEdit(treeGroup, "Boss")
 end
 
 function RaidNotes:CreateNotesEdit(parent, name)
     editBox = AceGUI:Create("MultiLineEditBox")
     editBox:SetLabel(name)
     editBox:SetRelativeWidth(1)
-    editBox:SetNumLines(9)
+    editBox:SetNumLines(11)
     parent:AddChild(editBox)
 end
 
