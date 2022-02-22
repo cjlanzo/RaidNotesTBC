@@ -3,6 +3,40 @@ local AceGUI = _G.LibStub("AceGUI-3.0")
 
 local f
 
+local function CreateTree()
+    local r    = raids
+    local tree = {}
+
+    local function CreateBossTable(bossName, bossId)
+        local t = {}
+        t["text"]  = bossName
+        t["value"] = bossName
+
+        return t
+    end
+
+    local function CreateRaidTable(raidName, bosses)
+        local t = {}
+        t["text"]  = raidName
+        t["value"] = raidName
+
+        local children = {}
+        for k,v in pairs(bosses) do
+            table.insert(children, CreateBossTable(k,v))
+        end
+
+        t["children"] = children
+
+        return t
+    end
+
+    for k,v in pairs(r) do
+        table.insert(tree, CreateRaidTable(k,v))
+    end
+
+    return tree
+end
+
 function RaidNotes:Init_Journal()
     f = AceGUI:Create("Frame")
     f:Hide()
@@ -14,27 +48,20 @@ function RaidNotes:Init_Journal()
     f:SetTitle(ADDON_NAME)
     _G[ADDON_NAME.."_MainFrame"] = f
 
-    local tree = {
-        {
-            value = "A",
-            text = "Alpha",
-            children = {
-                {
-                    value = "D",
-                    text = "Delta"
-                }
-            }
-        },
-        {
-            value = "B",
-            text = "Bravo"
-        }
-    }
-
     local treeGroup = AceGUI:Create("TreeGroup")
     treeGroup:SetFullWidth(true)
     treeGroup:SetFullHeight(true)
-    treeGroup:SetTree(tree)
+    treeGroup:SetTree(CreateTree())
+
+    local function LoadData(self, key)
+        local t = RaidNotes:LoadNotes(key)
+
+        _G["Trash_EditBox"].editBox:SetText(t.trash)
+        _G["Boss_EditBox"].editBox:SetText(t.boss)
+    end
+
+    hooksecurefunc(treeGroup, "SetSelected", LoadData)
+
     f:AddChild(treeGroup)
 
     RaidNotes:CreateNotesEdit(treeGroup, "Trash")
@@ -43,10 +70,23 @@ end
 
 function RaidNotes:CreateNotesEdit(parent, name)
     editBox = AceGUI:Create("MultiLineEditBox")
+    _G[name.."_EditBox"] = editBox
     editBox:SetLabel(name)
     editBox:SetRelativeWidth(1)
     editBox:SetNumLines(11)
     parent:AddChild(editBox)
+
+    -- figure out if we can replace this with a hooksecurefunc without having to duplicate the code
+    editBox.button:SetScript("OnClick", function(self)
+        self = self.obj
+        self.editBox:ClearFocus()
+
+        RaidNotes:SaveNotes(parent.localstatus.selected, self.label:GetText(), self:GetText())
+
+        if not self:Fire("OnEnterPressed", self.editBox:GetText()) then
+            self.button:Disable()
+        end
+    end)
 end
 
 function RaidNotes:Show_Journal()
