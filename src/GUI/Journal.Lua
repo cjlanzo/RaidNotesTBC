@@ -101,8 +101,8 @@ end
 
 function RaidNotes:Toggle_Journal()
     if f and f:IsShown() then
-        self:Hide()
+        self:Hide_Journal()
     else
-        self:Show()
+        self:Show_Journal()
     end
 end

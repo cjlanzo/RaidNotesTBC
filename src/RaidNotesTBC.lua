@@ -7,9 +7,8 @@ function RaidNotes:OnInitialize()
 	self.db = _G.LibStub("AceDB-3.0"):New("RaidNotesTBC")
 
 	self:Print("Welcome to RaidNotesTBC")
-	RaidNotes:Show_Journal()
 
-	-- self:DrawMinimapIcon()
+	self:DrawMinimapIcon()
 end
 
 function RaidNotes:SaveNotes(id, frameName, text)
@@ -29,4 +28,32 @@ function RaidNotes:LoadNotes(key)
 	end
 
 	return t
+end
+
+function RaidNotes:DrawMinimapIcon()
+	libDBIcon:Register(
+		ADDON_NAME,
+		_G.LibStub("LibDataBroker-1.1"):NewDataObject(ADDON_NAME, 
+			{
+				type = "data source",
+				text = ADDON_NAME,
+				icon = "interface/icons/ability_deathwing_bloodcorruption_death",
+				OnClick = function(self, button)
+					RaidNotes:Toggle_Journal()
+				end,
+				OnTooltipShow = function(tooltip)
+					tooltip:AddLine("RaidNotesTBC - Left click to toggle")
+				end
+			}),
+		self.db.profile.minimapButton
+	)
+end
+
+function RaidNotes:ToggleMinimapButton()
+	self.db.profile.minimapButton.hide = not self.db.profile.minimapButton.hide
+	if self.db.profile.minimapButton.hide then
+		libDBIcon:Hide(ADDON_NAME)
+	else
+		libDBIcon:Show(ADDON_NAME)
+	end
 end
