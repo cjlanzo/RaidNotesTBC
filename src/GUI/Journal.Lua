@@ -37,7 +37,7 @@ local function CreateTree()
     return tree
 end
 
-function RaidNotes:Init_Journal()
+function RaidNotes:InitJournal()
     f = AceGUI:Create("Frame")
     f:Hide()
     f:SetWidth(860)
@@ -55,6 +55,8 @@ function RaidNotes:Init_Journal()
 
     local function LoadData(self, key)
         local t = RaidNotes:LoadNotes(key)
+
+        if not t then return end
 
         _G["Trash_EditBox"].editBox:SetText(t.trash)
         _G["Boss_EditBox"].editBox:SetText(t.boss)
@@ -89,20 +91,20 @@ function RaidNotes:CreateNotesEdit(parent, name)
     end)
 end
 
-function RaidNotes:Show_Journal()
-    if not f then self:Init_Journal() end
+function RaidNotes:ShowJournal()
+    if not f then self:InitJournal() end
 
     f:Show()
 end
 
-function RaidNotes:Hide_Journal() 
+function RaidNotes:HideJournal() 
     f:Hide() 
 end
 
-function RaidNotes:Toggle_Journal()
+function RaidNotes:ToggleJournal()
     if f and f:IsShown() then
-        self:Hide_Journal()
+        self:HideJournal()
     else
-        self:Show_Journal()
+        self:ShowJournal()
     end
 end

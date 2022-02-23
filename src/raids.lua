@@ -46,7 +46,7 @@ bt["Teron Gorefiend"]        = 604
 bt["Gurtogg Bloodboil"]      = 605
 bt["Reliquary of Souls"]     = 606
 bt["Mother Shahraz"]         = 607
-bt["The Illidari Council"]   = 608-- might not work
+bt["The Illidari Council"]   = 608 -- might not work
 bt["Illidan Stormrage"]      = 609
 
 
@@ -59,8 +59,8 @@ sunwell["M'uru"]        = 728
 sunwell["Kil'jaeden"]   = 729
 
 local test = {}
-test["Rakoria"] = 649
-test["Kugnar"]  = 650
+test["High Overlord Saurfang"] = 649
+test["Overlord Runthak"]  = 650
 
 raids = {}
 raids["Karazhan"]             = karazhan
@@ -71,4 +71,4 @@ raids["Tempest Keep"]         = tk
 raids["Mount Hyjal"]          = hyjal -- test this
 raids["Black Temple"]         = bt -- test this
 raids["The Sunwell"]          = sunwell -- test this
-raids["Terokkar Forest"]      = test -- remove this
+raids["Orgrimmar"]            = test -- remove this
