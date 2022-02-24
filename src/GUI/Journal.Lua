@@ -7,7 +7,7 @@ local function CreateTree()
     local r    = raids
     local tree = {}
 
-    local function CreateBossTable(bossName, bossId)
+    local function CreateBossTable(bossName)
         local t = {}
         t["text"]  = bossName
         t["value"] = bossName
@@ -21,8 +21,8 @@ local function CreateTree()
         t["value"] = raidName
 
         local children = {}
-        for k,v in pairs(bosses) do
-            table.insert(children, CreateBossTable(k,v))
+        for i,v in ipairs(bosses) do
+            table.insert(children, CreateBossTable(v))
         end
 
         t["children"] = children
@@ -56,10 +56,16 @@ function RaidNotes:InitJournal()
     local function LoadData(self, key)
         local t = RaidNotes:LoadNotes(key)
 
-        if not t then return end
+        local trashText = ""
+        local bossText  = ""
 
-        _G["Trash_EditBox"].editBox:SetText(t.trash)
-        _G["Boss_EditBox"].editBox:SetText(t.boss)
+        if t then 
+            trashText = t.trash
+            bossText  = t.boss
+        end
+
+        _G["Trash_EditBox"].editBox:SetText(trashText)
+        _G["Boss_EditBox"].editBox:SetText(bossText)
     end
 
     hooksecurefunc(treeGroup, "SetSelected", LoadData)

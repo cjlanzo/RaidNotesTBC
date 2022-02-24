@@ -18,54 +18,71 @@ function RaidNotes:OnInitialize()
 	self:DrawMinimapIcon()
 end
 
-function RaidNotes:ENCOUNTER_START()
-	print("not yet implemented")
+local function UpdateNotes(zone, boss)
+	if not zone or not boss then return end
+
+	local data = RaidNotes:LoadNotes(zone.."\001"..boss)
+
+	if not data then return end
+	
+	RaidNotes:UpdateNotes(boss, data.trash, data.boss)
+	RaidNotes:ShowNotes()
 end
 
-function RaidNotes:ENCOUNTER_END()
-	print("not yet implemented")
+local function BasicUpdate()
+	local zone = GetZoneText()
+	
+	if not currentEncounters[zone] then return end
+
+	local currentEncounter = currentEncounters[zone]
+	local boss = raids[zone][currentEncounter]
+
+	UpdateNotes(zone, boss)
+end
+
+function RaidNotes:ENCOUNTER_START(encounterID, encounterName)
+	local zone = GetZoneText()
+
+	UpdateNotes(zone, encounterName)
+end
+
+function RaidNotes:ENCOUNTER_END(encounterID, encounterName, _, _, success)
+	if not success then return end
+
+	local zone = GetZoneText()
+	currentEncounters[zone] = currentEncounters[zone] + 1
+	
+	if not currentEncounters[zone] then return end
+
+	local currentEncounter = currentEncounters[zone]
+	local boss = raids[zone][currentEncounter]
+
+	UpdateNotes(zone, boss)
 end
 
 function RaidNotes:PLAYER_TARGET_CHANGED()
+	if (UnitIsDead("target")) then return end
+	
 	local zone = GetZoneText()
+	local target = UnitName("target")
     
-    if (raids[zone] ~= nil) then
-
-        if (UnitIsDead("target")) then return end
-        
-        local target = UnitName("target")
-
-		if not target then return end
-
-		local data = RaidNotes:LoadNotes(zone.."\001"..target)
-
-		if not data then return end
-        
-		RaidNotes:UpdateNotes(target, data.trash, data.boss)
-		RaidNotes:ShowNotes()
-        
-        -- if (aura_env.bossLookups[target] ~= nil) then
-        --     aura_env.currentEncounters[zone] = aura_env.bossLookups[target]
-            
-        --     return true
-        -- end
-    end
+	UpdateNotes(zone,target)
 end
 
 function RaidNotes:ZONE_CHANGED()
-	print("not yet implemented")
+	BasicUpdate()
 end
 
 function RaidNotes:ZONE_CHANGED_NEW_AREA()
-	print("not yet implemented")
+	BasicUpdate()
 end
 
 function RaidNotes:ZONE_CHANGED_INDOORS()
-	print("not yet implemented")
+	BasicUpdate()
 end
 
 function RaidNotes:PLAYER_ENTERING_WORLD()
-	print("player_entering_world: not yet implemented")
+	BasicUpdate()
 end
 
 function RaidNotes:SaveNotes(id, frameName, text)
