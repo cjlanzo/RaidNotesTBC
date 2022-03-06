@@ -18,71 +18,73 @@ function RaidNotes:OnInitialize()
 	self:DrawMinimapIcon()
 end
 
-local function UpdateNotes(zone, boss)
-	if not zone or not boss then return end
+function RaidNotes:ENCOUNTER_START(_, encounterName)
+	local zone = GetZoneText()
+	local data = RaidNotes:LoadNotes(zone, encounterName)
 
-	local data = RaidNotes:LoadNotes(zone.."\001"..boss)
+	if not data then return end
+	
+	RaidNotes:UpdateNotes(encounterName, data.trash, data.boss)
+	SetCurrentEncounter(zone, encounterName)
+end
+
+function RaidNotes:ENCOUNTER_END(encounterID, encounterName, _, _, success)
+	if not success or success == false then return end
+
+	local zone = GetZoneText()
+	local index = currentEncounters[zone] + 1
+	
+	currentEncounters[zone] = index
+
+	local boss = raids[zone][index]
+	local data = RaidNotes:LoadNotes(zone, boss)
 
 	if not data then return end
 	
 	RaidNotes:UpdateNotes(boss, data.trash, data.boss)
-	RaidNotes:ShowNotes()
-end
-
-local function BasicUpdate()
-	local zone = GetZoneText()
-	
-	if not currentEncounters[zone] then return end
-
-	local currentEncounter = currentEncounters[zone]
-	local boss = raids[zone][currentEncounter]
-
-	UpdateNotes(zone, boss)
-end
-
-function RaidNotes:ENCOUNTER_START(encounterID, encounterName)
-	local zone = GetZoneText()
-
-	UpdateNotes(zone, encounterName)
-end
-
-function RaidNotes:ENCOUNTER_END(encounterID, encounterName, _, _, success)
-	if not success then return end
-
-	local zone = GetZoneText()
-	currentEncounters[zone] = currentEncounters[zone] + 1
-	
-	if not currentEncounters[zone] then return end
-
-	local currentEncounter = currentEncounters[zone]
-	local boss = raids[zone][currentEncounter]
-
-	UpdateNotes(zone, boss)
 end
 
 function RaidNotes:PLAYER_TARGET_CHANGED()
-	if (UnitIsDead("target")) then return end
+	if UnitIsDead("target") then return end
 	
 	local zone = GetZoneText()
 	local target = UnitName("target")
-    
-	UpdateNotes(zone,target)
+	local data = RaidNotes:LoadNotes(zone, target)
+
+	if not data then return end
+	
+	RaidNotes:UpdateNotes(target, data.trash, data.boss)
+	SetCurrentEncounter(zone, target)
+end
+
+local function UpdateNotesOnZoneChange()
+	local zone = GetZoneText()
+	
+	if not currentEncounters[zone] then return end
+
+	local currentEncounter = currentEncounters[zone]
+	local boss = raids[zone][currentEncounter]
+	local data = RaidNotes:LoadNotes(zone, boss)
+
+	if not data then return end
+	
+	RaidNotes:UpdateNotes(boss, data.trash, data.boss)
 end
 
 function RaidNotes:ZONE_CHANGED()
-	BasicUpdate()
+	UpdateNotesOnZoneChange()
 end
 
 function RaidNotes:ZONE_CHANGED_NEW_AREA()
-	BasicUpdate()
+	UpdateNotesOnZoneChange()
 end
 
 function RaidNotes:ZONE_CHANGED_INDOORS()
-	BasicUpdate()
+	UpdateNotesOnZoneChange()
 end
 
 function RaidNotes:PLAYER_ENTERING_WORLD()
-	BasicUpdate()
+	UpdateNotesOnZoneChange()
 end
 
 function RaidNotes:SaveNotes(id, frameName, text)
@@ -91,7 +93,7 @@ function RaidNotes:SaveNotes(id, frameName, text)
 	self.db.char[id][frameName] = text
 end
 
-function RaidNotes:LoadNotes(key)
+function RaidNotes:LoadNotesByKey(key)
 	if not self.db.char[key] then return nil end
 
 	local t = {}
@@ -99,6 +101,14 @@ function RaidNotes:LoadNotes(key)
 	t.boss = self.db.char[key]["Boss"] or ""
 
 	return t
+end
+
+function RaidNotes:LoadNotes(zone, boss)
+	if not zone or not boss then return nil end
+
+	local key = zone.."\001"..boss
+
+	return RaidNotes:LoadNotesByKey(key)
 end
 
 function RaidNotes:DrawMinimapIcon()

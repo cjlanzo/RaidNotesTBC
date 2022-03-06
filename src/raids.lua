@@ -83,3 +83,11 @@ currentEncounters["Hyjal Summit"]         = 1
 currentEncounters["Black Temple"]         = 1
 currentEncounters["The Sunwell"]          = 1 -- test this
 currentEncounters["Orgrimmar"]            = 1 -- remove this
+
+function SetCurrentEncounter(zone, boss)
+    if not raids[zone] then return end
+
+    for i,v in pairs(raids[zone]) do
+        if v == boss then currentEncounters[zone] = i end
+    end
+end

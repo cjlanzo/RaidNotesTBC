@@ -54,7 +54,7 @@ function RaidNotes:InitJournal()
     treeGroup:SetTree(CreateTree())
 
     local function LoadData(self, key)
-        local t = RaidNotes:LoadNotes(key)
+        local t = RaidNotes:LoadNotesByKey(key)
 
         local trashText = ""
         local bossText  = ""

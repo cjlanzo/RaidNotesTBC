@@ -34,6 +34,8 @@ function RaidNotes:UpdateNotes(bossName, trashNotes, bossNotes)
     text = text..bossNotes
 
     _G["Notes_Label"]:SetText(text)
+
+    self:ShowNotes()
 end
 
 function RaidNotes:ShowNotes()
