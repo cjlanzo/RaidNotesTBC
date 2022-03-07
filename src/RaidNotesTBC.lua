@@ -3,7 +3,10 @@ local libDBIcon     = _G.LibStub("LibDBIcon-1.0")
 local AceSerializer = _G.LibStub("AceSerializer-3.0")
 
 function RaidNotes:OnInitialize()
-	self.db = _G.LibStub("AceDB-3.0"):New("RaidNotesTBC")
+	self.db = _G.LibStub("AceDB-3.0"):New(
+		ADDON_NAME, {
+			profile = {minimapButton = {hide = false}}
+		})
 
 	self:Print("Welcome to RaidNotesTBC")
 
@@ -118,7 +121,7 @@ function RaidNotes:DrawMinimapIcon()
 			{
 				type = "data source",
 				text = ADDON_NAME,
-				icon = "interface/icons/ability_deathwing_bloodcorruption_death",
+				icon = "interface/icons/INV_Misc_Head_Murloc_01",
 				OnClick = function(self, button)
 					RaidNotes:ToggleJournal()
 				end,
