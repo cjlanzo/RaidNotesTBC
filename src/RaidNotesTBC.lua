@@ -110,9 +110,9 @@ end
 function RaidNotes:PLAYER_LOGOUT()
 	if not self.db.char["framePos"] then self.db.char["framePos"] = {} end
 
-	if not _G["Notes_MainFrame"] then return end
+	if not _G["NotesMainFrame"] then return end
 
-	local point, _, _, xOfs, yOfs = _G["Notes_MainFrame"]:GetPoint()
+	local point, _, _, xOfs, yOfs = _G["NotesMainFrame"]:GetPoint()
 
 	self.db.char["framePos"]["point"] = point
 	self.db.char["framePos"]["xOfs"]  = xOfs

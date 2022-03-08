@@ -48,8 +48,8 @@ function RaidNotes:InitJournal()
 
     hooksecurefunc(f, "Hide", function(self) RaidNotes:LockNotes() end)
 
-    _G[ADDON_NAME.."_MainFrame"] = f
-    table.insert(UISpecialFrames, ADDON_NAME.."_MainFrame") -- close on escape
+    _G[ADDON_NAME.."MainFrame"] = f
+    table.insert(UISpecialFrames, ADDON_NAME.."MainFrame") -- close on escape
 
     local treeGroup = AceGUI:Create("TreeGroup")
     treeGroup:SetFullWidth(true)
@@ -67,8 +67,8 @@ function RaidNotes:InitJournal()
             bossText  = t.boss
         end
 
-        _G["Trash_EditBox"].editBox:SetText(trashText)
-        _G["Boss_EditBox"].editBox:SetText(bossText)
+        _G["TrashEditBox"].editBox:SetText(trashText)
+        _G["BossEditBox"].editBox:SetText(bossText)
     end
 
     hooksecurefunc(treeGroup, "SetSelected", LoadData)
@@ -81,7 +81,7 @@ end
 
 function RaidNotes:CreateNotesEdit(parent, name)
     editBox = AceGUI:Create("MultiLineEditBox")
-    _G[name.."_EditBox"] = editBox
+    _G[name.."EditBox"] = editBox
     editBox:SetLabel(name)
     editBox:SetRelativeWidth(1)
     editBox:SetNumLines(11)

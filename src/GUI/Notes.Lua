@@ -37,7 +37,7 @@ function RaidNotes:InitNotes()
     f:SetHeight(400)
     f:SetWidth(400)
     f:SetTitle("Drag me")
-    f:SetLayout("Fill")
+    f:SetLayout("Flow")
     f.frame:SetFrameStrata("BACKGROUND")
     f.frame:EnableMouse(false)
 
@@ -47,27 +47,32 @@ function RaidNotes:InitNotes()
 
     RaidNotes:LockNotes()
 
-    local label = AceGUI:Create("Label")
-    _G["Notes_Label"] = label
-
-    f:AddChild(label)
+    self:CreateNotesLabel(f, "NotesTitleLabel")
+    self:CreateNotesLabel(f, "NotesTrashLabel")
+    self:CreateNotesLabel(f, "NotesBossLabel")
     
-    _G["Notes_MainFrame"] = f
+    _G["NotesMainFrame"] = f
+end
+
+function RaidNotes:CreateNotesLabel(parent, name)
+    local label = AceGUI:Create("Label")
+    label:SetRelativeWidth(1)
+    _G[name] = label
+
+    parent:AddChild(label)
 end
 
 function RaidNotes:UpdateNotes(bossName, trashNotes, bossNotes)
     if not f then self:InitNotes() end
-    
-    local text = "-= "..bossName.." =-\n\n"
-        
-    if trashNotes then
-        text = text.."Trash Notes:\n"..trashNotes.."\n\nBoss Notes:\n"
-    end
-    
-    text = text..bossNotes
 
-    _G["Notes_Label"]:SetText(text)
-    _G["Notes_Label"]:SetFontObject(GameFontNormalLarge)
+    local function SetLabelText(label, text) 
+        label:SetText(text)
+        label:SetFontObject(GameFontNormalLarge)
+    end
+
+    SetLabelText(_G["NotesTitleLabel"], "-= "..bossName.." =-")
+    SetLabelText(_G["NotesTrashLabel"], "\nTrash Notes:\n"..trashNotes)
+    SetLabelText(_G["NotesBossLabel"], "\nBoss Notes:\n"..bossNotes)
 
     self:ShowNotes()
 end
