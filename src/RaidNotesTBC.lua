@@ -117,14 +117,14 @@ function RaidNotes:PLAYER_LOGOUT()
 	if not notesFrame then return end
 
 	local point, _, _, xOfs, yOfs = notesFrame:GetPoint()
-	local width                   = notesFrame.frame:GetWidth()
-	local height                  = notesFrame.frame:GetHeight()
+	local width = notesFrame.frame:GetWidth()
+	local height = notesFrame.frame:GetHeight()
 
-	self.db.char["framePos"]["point"]   = point
-	self.db.char["framePos"]["xOfs"]    = xOfs
-	self.db.char["framePos"]["yOfs"]    = yOfs
-	self.db.char["framePos"]["width"]   = width
-	self.db.char["framePos"]["height"]  = height
+	self.db.char["framePos"]["point"]  = point
+	self.db.char["framePos"]["xOfs"]   = xOfs
+	self.db.char["framePos"]["yOfs"]   = yOfs
+	self.db.char["framePos"]["width"]  = width
+	self.db.char["framePos"]["height"] = height
 end
 
 function RaidNotes:ShouldDisplayNotes() return raids[GetZoneText()] end
