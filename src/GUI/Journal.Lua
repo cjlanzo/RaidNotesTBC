@@ -44,9 +44,12 @@ function RaidNotes:InitJournal()
     f:SetHeight(500)
     f:SetLayout("Flow")
     f:EnableResize(false)
-
     f:SetTitle(ADDON_NAME)
+
+    hooksecurefunc(f, "Hide", function(self) RaidNotes:LockNotes() end)
+
     _G[ADDON_NAME.."_MainFrame"] = f
+    table.insert(UISpecialFrames, ADDON_NAME.."_MainFrame") -- close on escape
 
     local treeGroup = AceGUI:Create("TreeGroup")
     treeGroup:SetFullWidth(true)
@@ -90,6 +93,7 @@ function RaidNotes:CreateNotesEdit(parent, name)
         self.editBox:ClearFocus()
 
         RaidNotes:SaveNotes(parent.localstatus.selected, self.label:GetText(), self:GetText())
+        -- RaidNotes:UpdateNotes() -- this needs to cause the Notes frame to update with the new data
 
         if not self:Fire("OnEnterPressed", self.editBox:GetText()) then
             self.button:Disable()
@@ -101,9 +105,13 @@ function RaidNotes:ShowJournal()
     if not f then self:InitJournal() end
 
     f:Show()
+    RaidNotes:ShowNotes()
+    RaidNotes:UnlockNotes()
 end
 
-function RaidNotes:HideJournal() 
+function RaidNotes:HideJournal()
+    if not RaidNotes:ShouldDisplayNotes() then RaidNotes:HideNotes() end
+    RaidNotes:LockNotes()
     f:Hide() 
 end
 

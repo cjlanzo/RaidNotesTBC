@@ -5,7 +5,7 @@
 ## Author: Voodoomoose
 ## SavedVariables: RaidNotesTBC
 
-embeds.xml
+Libs\embeds.xml
 
 constants.lua
 raids.lua

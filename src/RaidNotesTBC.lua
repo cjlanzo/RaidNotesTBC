@@ -17,8 +17,25 @@ function RaidNotes:OnInitialize()
 	self:RegisterEvent("ZONE_CHANGED")
 	self:RegisterEvent("ZONE_CHANGED_INDOORS")
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
+	self:RegisterEvent("PLAYER_LOGOUT")
 
 	self:DrawMinimapIcon()
+end
+
+function RaidNotes:LoadFramePosition()
+	local function LoadValueOrDefault(value, default)
+		if not self.db.char["framePos"] then return default end
+		if not self.db.char["framePos"][value] then return default end
+
+		return self.db.char["framePos"][value]
+	end
+
+	local pos = {}
+	pos.point = LoadValueOrDefault("point", "CENTER")
+	pos.xOfs  = LoadValueOrDefault("xOfs", -640)
+	pos.yOfs  = LoadValueOrDefault("yOfs", 0)
+
+	return pos
 end
 
 function RaidNotes:ENCOUNTER_START(_, encounterName)
@@ -63,7 +80,7 @@ end
 local function UpdateNotesOnZoneChange()
 	local zone = GetZoneText()
 	
-	if not currentEncounters[zone] then return end
+	if not currentEncounters[zone] then RaidNotes:HideNotes() return end
 
 	local currentEncounter = currentEncounters[zone]
 	local boss = raids[zone][currentEncounter]
@@ -89,6 +106,20 @@ end
 function RaidNotes:PLAYER_ENTERING_WORLD()
 	UpdateNotesOnZoneChange()
 end
+
+function RaidNotes:PLAYER_LOGOUT()
+	if not self.db.char["framePos"] then self.db.char["framePos"] = {} end
+
+	if not _G["Notes_MainFrame"] then return end
+
+	local point, _, _, xOfs, yOfs = _G["Notes_MainFrame"]:GetPoint()
+
+	self.db.char["framePos"]["point"] = point
+	self.db.char["framePos"]["xOfs"]  = xOfs
+	self.db.char["framePos"]["yOfs"]  = yOfs
+end
+
+function RaidNotes:ShouldDisplayNotes() return raids[GetZoneText()] end
 
 function RaidNotes:SaveNotes(id, frameName, text)
 	if not self.db.char[id] then self.db.char[id] = {} end
