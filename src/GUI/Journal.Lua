@@ -46,7 +46,10 @@ function RaidNotes:InitJournal()
     f:EnableResize(false)
     f:SetTitle(ADDON_NAME)
 
-    hooksecurefunc(f, "Hide", function(self) RaidNotes:LockNotes() end)
+    hooksecurefunc(f, "Hide", function(self) 
+        if not RaidNotes:ShouldDisplayNotes() then RaidNotes:HideNotes() end
+        RaidNotes:LockNotes() 
+    end)
 
     _G[ADDON_NAME.."MainFrame"] = f
     table.insert(UISpecialFrames, ADDON_NAME.."MainFrame") -- close on escape
