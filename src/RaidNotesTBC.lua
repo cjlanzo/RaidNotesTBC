@@ -31,9 +31,11 @@ function RaidNotes:LoadFramePosition()
 	end
 
 	local pos = {}
-	pos.point = LoadValueOrDefault("point", "CENTER")
-	pos.xOfs  = LoadValueOrDefault("xOfs", -640)
-	pos.yOfs  = LoadValueOrDefault("yOfs", 0)
+	pos.point   = LoadValueOrDefault("point", "CENTER")
+	pos.xOfs    = LoadValueOrDefault("xOfs", -640)
+	pos.yOfs    = LoadValueOrDefault("yOfs", 0)
+	pos.width   = LoadValueOrDefault("width", 400)
+	pos.height  = LoadValueOrDefault("height", 400)
 
 	return pos
 end
@@ -110,13 +112,19 @@ end
 function RaidNotes:PLAYER_LOGOUT()
 	if not self.db.char["framePos"] then self.db.char["framePos"] = {} end
 
-	if not _G["NotesMainFrame"] then return end
+	local notesFrame = _G["NotesMainFrame"]
 
-	local point, _, _, xOfs, yOfs = _G["NotesMainFrame"]:GetPoint()
+	if not notesFrame then return end
 
-	self.db.char["framePos"]["point"] = point
-	self.db.char["framePos"]["xOfs"]  = xOfs
-	self.db.char["framePos"]["yOfs"]  = yOfs
+	local point, _, _, xOfs, yOfs = notesFrame:GetPoint()
+	local width                   = notesFrame.frame:GetWidth()
+	local height                  = notesFrame.frame:GetHeight()
+
+	self.db.char["framePos"]["point"]   = point
+	self.db.char["framePos"]["xOfs"]    = xOfs
+	self.db.char["framePos"]["yOfs"]    = yOfs
+	self.db.char["framePos"]["width"]   = width
+	self.db.char["framePos"]["height"]  = height
 end
 
 function RaidNotes:ShouldDisplayNotes() return raids[GetZoneText()] end

@@ -34,8 +34,6 @@ end
 function RaidNotes:InitNotes()
     f = AceGUI:Create("Window")
     f:Hide()
-    f:SetHeight(400)
-    f:SetWidth(400)
     f:SetTitle("Drag me")
     f.frame:SetFrameStrata("BACKGROUND")
     f.frame:EnableMouse(false)
@@ -43,6 +41,8 @@ function RaidNotes:InitNotes()
     local framePos = RaidNotes:LoadFramePosition()
     f:ClearAllPoints()
     f:SetPoint(framePos.point, framePos.xOfs, framePos.yOfs)
+    f:SetHeight(framePos.height)
+    f:SetWidth(framePos.width)
 
     RaidNotes:LockNotes()
 
