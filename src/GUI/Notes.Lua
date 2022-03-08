@@ -37,7 +37,6 @@ function RaidNotes:InitNotes()
     f:SetHeight(400)
     f:SetWidth(400)
     f:SetTitle("Drag me")
-    f:SetLayout("Flow")
     f.frame:SetFrameStrata("BACKGROUND")
     f.frame:EnableMouse(false)
 
@@ -47,17 +46,33 @@ function RaidNotes:InitNotes()
 
     RaidNotes:LockNotes()
 
-    self:CreateNotesLabel(f, "NotesTitleLabel")
-    self:CreateNotesLabel(f, "NotesTrashLabel")
-    self:CreateNotesLabel(f, "NotesBossLabel")
+    self:CreateNotesLabel(f, "TitleHeader")
+    self:CreateNotesLabelGroup(f, "Trash")
+    self:CreateNotesLabelGroup(f, "Boss")
     
     _G["NotesMainFrame"] = f
 end
 
-function RaidNotes:CreateNotesLabel(parent, name)
+function RaidNotes:CreateNotesLabelGroup(parent, name)
+    local group = AceGUI:Create("SimpleGroup")
+    group:SetRelativeWidth(1)
+
+    RaidNotes:CreateNotesLabel(group, name.."Spacer", "\n")
+    RaidNotes:CreateNotesLabel(group, name.."Header", name.." Notes:")
+    RaidNotes:CreateNotesLabel(group, name.."Notes")
+
+    _G["Notes"..name.."Group"] = group
+    parent:AddChild(group)
+end
+
+function RaidNotes:CreateNotesLabel(parent, name, text)
     local label = AceGUI:Create("Label")
+    label:SetFontObject(GameFontNormalLarge)
     label:SetRelativeWidth(1)
-    _G[name] = label
+
+    if text then label:SetText(text) end
+
+    _G["Notes"..name] = label
 
     parent:AddChild(label)
 end
@@ -65,16 +80,20 @@ end
 function RaidNotes:UpdateNotes(bossName, trashNotes, bossNotes)
     if not f then self:InitNotes() end
 
-    local function SetLabelText(label, text) 
-        label:SetText(text)
-        label:SetFontObject(GameFontNormalLarge)
+    local function SetLabelText(groupName, text)
+        if not text or text == "" then
+            _G["Notes"..groupName.."Group"].frame:Hide()
+        else
+            _G["Notes"..groupName.."Notes"]:SetText(text)
+            _G["Notes"..groupName.."Group"].frame:Show()
+        end
     end
-
-    SetLabelText(_G["NotesTitleLabel"], "-= "..bossName.." =-")
-    SetLabelText(_G["NotesTrashLabel"], "\nTrash Notes:\n"..trashNotes)
-    SetLabelText(_G["NotesBossLabel"], "\nBoss Notes:\n"..bossNotes)
-
+    
     self:ShowNotes()
+
+    _G["NotesTitleHeader"]:SetText("-= "..bossName.." =-")
+    SetLabelText("Trash", trashNotes)
+    SetLabelText("Boss", bossNotes)
 end
 
 function RaidNotes:ShowNotes()
