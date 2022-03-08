@@ -93,7 +93,12 @@ function RaidNotes:CreateNotesEdit(parent, name)
         self.editBox:ClearFocus()
 
         RaidNotes:SaveNotes(parent.localstatus.selected, self.label:GetText(), self:GetText())
-        -- RaidNotes:UpdateNotes() -- this needs to cause the Notes frame to update with the new data
+        
+        -- if we are editing the boss that is being displayed, update the notes immediately
+        local bossName = Split(parent.localstatus.selected, "\001")[2]
+        if string.find(_G["NotesTitleHeader"].label:GetText(), bossName) then
+            RaidNotes:UpdateNotes(bossName, _G["TrashEditBox"].editBox:GetText(), _G["BossEditBox"].editBox:GetText())
+        end
 
         if not self:Fire("OnEnterPressed", self.editBox:GetText()) then
             self.button:Disable()

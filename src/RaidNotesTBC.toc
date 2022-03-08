@@ -8,6 +8,7 @@
 Libs\embeds.xml
 
 constants.lua
+utilities.lua
 raids.lua
 RaidNotesTBC.lua
 GUI\Journal.lua
