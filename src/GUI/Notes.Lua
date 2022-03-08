@@ -80,20 +80,26 @@ end
 function RaidNotes:UpdateNotes(bossName, trashNotes, bossNotes)
     if not f then self:InitNotes() end
 
-    local function SetLabelText(groupName, text)
+    local function HideIfEmpty(groupName)
+        local text = _G["Notes"..groupName.."Notes"].label:GetText()
+        local group = _G["Notes"..groupName.."Group"].frame
+        group:Show()
+
         if not text or text == "" then
-            _G["Notes"..groupName.."Group"].frame:Hide()
-        else
-            _G["Notes"..groupName.."Notes"]:SetText(text)
-            _G["Notes"..groupName.."Group"].frame:Show()
+            group:Hide()
         end
     end
-    
+
     self:ShowNotes()
 
     _G["NotesTitleHeader"]:SetText("-= "..bossName.." =-")
-    SetLabelText("Trash", trashNotes)
-    SetLabelText("Boss", bossNotes)
+    _G["NotesTrashNotes"]:SetText(trashNotes)
+    _G["NotesBossNotes"]:SetText(bossNotes)
+
+    f:DoLayout()
+
+    HideIfEmpty("Trash")
+    HideIfEmpty("Boss")
 end
 
 function RaidNotes:ShowNotes()

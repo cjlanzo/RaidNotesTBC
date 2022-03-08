@@ -132,7 +132,7 @@ function RaidNotes:ShouldDisplayNotes() return raids[GetZoneText()] end
 function RaidNotes:SaveNotes(id, frameName, text)
 	if not self.db.char[id] then self.db.char[id] = {} end
 
-	self.db.char[id][frameName] = text
+	self.db.char[id][frameName] = text or ""
 end
 
 function RaidNotes:LoadNotesByKey(key)
