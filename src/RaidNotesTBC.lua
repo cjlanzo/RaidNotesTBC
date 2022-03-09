@@ -136,11 +136,15 @@ function RaidNotes:SaveNotes(id, frameName, text)
 end
 
 function RaidNotes:LoadNotesByKey(key)
-	if not self.db.char[key] then return nil end
+	local function LoadOrDefault(value, default)
+		if not self.db.char[key] then return default end
+		if not self.db.char[key][value] then return default end
+		return self.db.char[key][value]
+	end
 
 	local t = {}
-	t.trash = self.db.char[key]["Trash"] or ""
-	t.boss = self.db.char[key]["Boss"] or ""
+	t.trash = LoadOrDefault("Trash", "")
+	t.boss = LoadOrDefault("Boss", "")
 
 	return t
 end

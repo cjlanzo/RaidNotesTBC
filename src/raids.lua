@@ -74,15 +74,9 @@ raids["The Sunwell"]          = sunwell -- test this
 raids["Orgrimmar"]            = test -- remove this
 
 currentEncounters = {}
-currentEncounters["Karazhan"]             = 1
-currentEncounters["Gruul's Lair"]         = 1
-currentEncounters["Magtheridon's Lair"]   = 1
-currentEncounters["Serpentshrine Cavern"] = 1
-currentEncounters["Tempest Keep"]         = 1
-currentEncounters["Hyjal Summit"]         = 1
-currentEncounters["Black Temple"]         = 1
-currentEncounters["The Sunwell"]          = 1 -- test this
-currentEncounters["Orgrimmar"]            = 1 -- remove this
+for k,_ in pairs(raids) do
+    currentEncounters[k] = 1
+end
 
 function SetCurrentEncounter(zone, boss)
     if not raids[zone] then return end
