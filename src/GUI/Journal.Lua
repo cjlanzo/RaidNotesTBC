@@ -99,7 +99,9 @@ function RaidNotes:CreateNotesEdit(parent, name)
         
         -- if we are editing the boss that is being displayed, update the notes immediately
         local bossName = Split(parent.localstatus.selected, "\001")[2]
-        if string.find(_G["NotesTitleHeader"].label:GetText(), bossName) then
+        local currentTitle = _G["NotesTitleHeader"].label:GetText()
+        
+        if currentTitle and string.find(currentTitle, bossName) then
             RaidNotes:UpdateNotes(bossName, _G["TrashEditBox"].editBox:GetText(), _G["BossEditBox"].editBox:GetText())
         end
 
