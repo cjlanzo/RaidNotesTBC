@@ -78,6 +78,16 @@ for k,_ in pairs(raids) do
     currentEncounters[k] = 1
 end
 
+function BossExistsInRaid(zone, boss)
+    if not raids[zone] then return end
+
+    for _,v in ipairs(raids[zone]) do
+        if v == boss then return true end
+    end
+
+    return false
+end
+
 function SetCurrentEncounter(zone, boss)
     if not raids[zone] then return end
 

@@ -42,6 +42,9 @@ end
 
 function RaidNotes:ENCOUNTER_START(_, encounterName)
 	local zone = GetZoneText()
+
+	if not BossExistsInRaid(zone, encounterName) then return end
+
 	local data = RaidNotes:LoadNotes(zone, encounterName)
 
 	if not data then return end
@@ -54,14 +57,17 @@ function RaidNotes:ENCOUNTER_END(encounterID, encounterName, _, _, success)
 	if not success or success == false then return end
 
 	local zone = GetZoneText()
+
+	if not currentEncounters[zone] then return end
+
 	local index = currentEncounters[zone] + 1
 	
 	currentEncounters[zone] = index
 
 	local boss = raids[zone][index]
-	local data = RaidNotes:LoadNotes(zone, boss)
+	local data = RaidNotes:LoadNotes(zone, boss) -- this will return nil when you kill the last boss
 
-	if not data then return end
+	if not data then return end -- consider hiding notes or doing something else if this is nil
 	
 	RaidNotes:UpdateNotes(boss, data.trash, data.boss)
 end
@@ -71,6 +77,9 @@ function RaidNotes:PLAYER_TARGET_CHANGED()
 	
 	local zone = GetZoneText()
 	local target = UnitName("target")
+
+	if not BossExistsInRaid(zone, target) then return end
+
 	local data = RaidNotes:LoadNotes(zone, target)
 
 	if not data then return end
