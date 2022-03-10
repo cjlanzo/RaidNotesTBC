@@ -93,7 +93,7 @@ local function UpdateNotesOnZoneChange()
 	
 	if not currentEncounters[zone] then RaidNotes:HideNotes() return end
 
-	local currentEncounter = currentEncounters[zone]
+	local currentEncounter = GetCurrentBoss(zone)
 	local boss = raids[zone][currentEncounter]
 	local data = RaidNotes:LoadNotes(zone, boss)
 

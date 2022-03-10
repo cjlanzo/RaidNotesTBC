@@ -95,3 +95,15 @@ function SetCurrentEncounter(zone, boss)
         if v == boss then currentEncounters[zone] = i end
     end
 end
+
+function GetCurrentBoss(zone)
+    for i = 1, GetNumSavedInstances() do
+		name,_,_,_,_,_,_,_,_,_,_,encounterProgress = GetSavedInstanceInfo(i)
+
+        if string.find(name, zone) then
+            return encounterProgress
+        end
+	end
+
+    return currentEncounters[zone]
+end
