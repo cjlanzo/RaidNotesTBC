@@ -88,45 +88,45 @@ raidAliases["The Battle for Mount Hyjal"] = "Hyjal Summit"
 
 currentEncounters = {}
 for k,_ in pairs(raids) do
-    currentEncounters[k] = 1
+	currentEncounters[k] = 1
 end
 
 function BossExistsInRaid(zone, boss)
-    if not raids[zone] then return end
+	if not raids[zone] then return end
 
-    for _,v in ipairs(raids[zone]) do
-        if v == boss then return true end
-    end
+	for _,v in ipairs(raids[zone]) do
+		if v == boss then return true end
+	end
 
-    return false
+	return false
 end
 
 function SetCurrentEncounter(zone, boss)
-    if not raids[zone] then return end
+	if not raids[zone] then return end
 
-    for i,v in pairs(raids[zone]) do
-        if v == boss then currentEncounters[zone] = i end
-    end
+	for i,v in pairs(raids[zone]) do
+		if v == boss then currentEncounters[zone] = i end
+	end
 end
 
 function UpdateCurrentEncounters(zone)
-    local function MapEncounterToZone(encounterName)
-        return raidAliases[encounterName] or encounterName
-    end
+	local function MapEncounterToZone(encounterName)
+		return raidAliases[encounterName] or encounterName
+	end
 
-    for i = 1, GetNumSavedInstances() do
+	for i = 1, GetNumSavedInstances() do
 		local name,_,_,_,_,_,_,_,_,_,_,encounterProgress = GetSavedInstanceInfo(i)
-        local _,_,isKilled,_ = GetSavedInstanceEncounterInfo(i, encounterProgress) -- be weary of bug where havent cleared instance and this is wrong
-        local zone = MapEncounterToZone(name)
+		local _,_,isKilled,_ = GetSavedInstanceEncounterInfo(i, encounterProgress) -- be weary of bug where havent cleared instance and this is wrong
+		local zone = MapEncounterToZone(name)
 
-        for k,_ in pairs(currentEncounters) do
-            if k == zone then
-                if isKilled then
-                    currentEncounters[k] = encounterProgress + 1
-                else    
-                    currentEncounters[k] = encounterProgress
-                end
-            end
-        end
+		for k,_ in pairs(currentEncounters) do
+			if k == zone then
+				if isKilled then
+					currentEncounters[k] = encounterProgress + 1
+				else    
+					currentEncounters[k] = encounterProgress
+				end
+			end
+		end
 	end
 end
