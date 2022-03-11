@@ -49,6 +49,13 @@ table.insert(bt, "Mother Shahraz")
 table.insert(bt, "The Illidari Council")
 table.insert(bt, "Illidan Stormrage")
 
+local za = {}
+table.insert(za, "Akil'zon")
+table.insert(za, "Nalorakk")
+table.insert(za, "Jan'alai")
+table.insert(za, "Halazzi")
+table.insert(za, "Hex Lord Malacrass")
+table.insert(za, "Daakara")
 
 local sunwell = {}
 table.insert(sunwell, "Kalecgos")
@@ -70,8 +77,14 @@ raids["Serpentshrine Cavern"] = ssc
 raids["Tempest Keep"]         = tk
 raids["Hyjal Summit"]         = hyjal
 raids["Black Temple"]         = bt
+raids["Zul'Aman"]             = za
 raids["The Sunwell"]          = sunwell -- test this
 raids["Orgrimmar"]            = test -- remove this
+
+raidAliases = {}
+raidAliases["The Eye"]                    = "Tempest Keep"
+raidAliases["Sunwell Plateau"]            = "The Sunwell"
+raidAliases["The Battle for Mount Hyjal"] = "Hyjal Summit"
 
 currentEncounters = {}
 for k,_ in pairs(raids) do
@@ -96,14 +109,24 @@ function SetCurrentEncounter(zone, boss)
     end
 end
 
-function GetCurrentBoss(zone)
-    for i = 1, GetNumSavedInstances() do
-		name,_,_,_,_,_,_,_,_,_,_,encounterProgress = GetSavedInstanceInfo(i)
+function UpdateCurrentEncounters(zone)
+    local function MapEncounterToZone(encounterName)
+        return raidAliases[encounterName] or encounterName
+    end
 
-        if string.find(name, zone) then
-            return encounterProgress
+    for i = 1, GetNumSavedInstances() do
+		local name,_,_,_,_,_,_,_,_,_,_,encounterProgress = GetSavedInstanceInfo(i)
+        local _,_,isKilled,_ = GetSavedInstanceEncounterInfo(i, encounterProgress) -- be weary of bug where havent cleared instance and this is wrong
+        local zone = MapEncounterToZone(name)
+
+        for k,_ in pairs(currentEncounters) do
+            if k == zone then
+                if isKilled then
+                    currentEncounters[k] = encounterProgress + 1
+                else    
+                    currentEncounters[k] = encounterProgress
+                end
+            end
         end
 	end
-
-    return currentEncounters[zone]
 end
