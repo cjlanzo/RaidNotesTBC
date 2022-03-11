@@ -64,10 +64,15 @@ function RaidNotes:ENCOUNTER_END(encounterID, encounterName, _, _, success)
 	
 	currentEncounters[zone] = index
 
-	local boss = raids[zone][index]
-	local data = RaidNotes:LoadNotes(zone, boss) -- this will return nil when you kill the last boss
+	if index > #raids[zone] then
+		RaidNotes:UpdateNotes(zone.." Complete!", nil, nil)
+		return
+	end
 
-	if not data then return end -- consider hiding notes or doing something else if this is nil
+	local boss = raids[zone][index]
+	local data = RaidNotes:LoadNotes(zone, boss)
+
+	if not data then return end
 	
 	RaidNotes:UpdateNotes(boss, data.trash, data.boss)
 end
