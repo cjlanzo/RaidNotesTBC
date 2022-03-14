@@ -19,3 +19,10 @@ if %target% == publish (
     mkdir %addon_folder%
     xcopy build %addon_folder% /E
 )
+
+if %target% == release (
+    if exist release rmdir /Q /S release
+    mkdir release
+    mkdir release\RaidNotesTBC
+    xcopy build release\RaidNotesTBC /E
+)
