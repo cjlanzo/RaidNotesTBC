@@ -1,9 +1,9 @@
 function Split(s, delimiter)
-	local result = {};
+	local result = {}
 
 	for match in (s..delimiter):gmatch("(.-)"..delimiter) do
-		table.insert(result, match);
+		table.insert(result, match)
 	end
 	
-	return result;
+	return result
 end

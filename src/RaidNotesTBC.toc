@@ -5,11 +5,11 @@
 ## Author: Voodoomoose
 ## SavedVariables: RaidNotesTBC
 
-Libs\embeds.xml
+Embeds.xml
 
-constants.lua
-utilities.lua
-raids.lua
+Constants.lua
+Utilities.lua
+Raids.lua
 RaidNotesTBC.lua
-GUI\Journal.lua
-GUI\Notes.lua
+Journal.lua
+Notes.lua

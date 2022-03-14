@@ -6,8 +6,11 @@ set addon_folder="C:\Program Files (x86)\World of Warcraft\_classic_\Interface\A
 
 if exist build rmdir /Q /S build
 mkdir build
+mkdir build\Libs
 
-xcopy src build /E
+xcopy src build
+xcopy src\GUI build /E
+xcopy src\Libs build\Libs /E
 copy RELEASE_NOTES.md build
 copy README.md build
 
