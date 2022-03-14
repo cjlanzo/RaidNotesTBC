@@ -1,6 +1,6 @@
 ## Interface: 20503
 ## Title: RaidNotesTBC
-## Version: 1.0.0
+## Version: 1.0.1
 ## Notes: An addon for managing personal raid notes
 ## Author: Voodoomoose
 ## SavedVariables: RaidNotesTBC

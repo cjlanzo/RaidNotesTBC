@@ -79,7 +79,7 @@ raids["Hyjal Summit"]         = hyjal
 raids["Black Temple"]         = bt
 raids["Zul'Aman"]             = za
 raids["The Sunwell"]          = sunwell -- test this
-raids["Orgrimmar"]            = test -- remove this
+-- raids["Orgrimmar"]            = test -- remove this
 
 raidAliases = {}
 raidAliases["The Eye"]                    = "Tempest Keep"
