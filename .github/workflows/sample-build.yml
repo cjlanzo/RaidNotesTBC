@@ -7,6 +7,6 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Run build
-        run: ./build.cmd
+        run: ./build.cmd build
       - name: List build files
         run: ls ./build
