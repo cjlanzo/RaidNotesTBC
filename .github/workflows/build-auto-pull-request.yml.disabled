@@ -1,0 +1,33 @@
+name: Run Auto Build (For Pull Requests)
+on:
+  pull_request:
+    types: [opened, synchronize, reopen]
+jobs:
+  run_build:
+    env:
+      defaultPublishTarget: OctoPack # Set to the build target (ex: RunTests or Build)
+      checkoutDir: '../../qa-test-config'
+ 
+    runs-on: [std-fake-runner, no-db]
+    steps:
+      - name: Checkout Source Code
+        uses: LexisNexis-GHA-Public/checkout@v2.3.4.2
+        with:
+          path: ${{ env.checkoutDir }}
+          allow_parent_path: true
+        id: checkout
+
+      - name: Dump Env
+        id: dumpenv
+        run: 'dir env:'
+      - name: Get .net Version
+        id: dumpver
+        run: "dotnet --version"
+      - name: Get Sdks
+        run: "dotnet --list-sdks"
+        id: dumpsdks
+
+      - name: Run Build using FAKE
+        id: run-build
+        run: ./build.cmd ${{ env.defaultPublishTarget }}
+        working-directory: ${{ steps.checkout.outputs.WORKSPACE_DIR }}
