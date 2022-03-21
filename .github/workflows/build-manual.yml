@@ -5,11 +5,11 @@ on:
       target:
         type: choice
         description: Build Target
-        default: Build
+        default: build
         options:
-        - Build
-        - Publish
-        - Release
+        - build
+        - publish
+        - release
 jobs:
   run_build:
     runs-on: windows-latest
