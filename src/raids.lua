@@ -1,89 +1,88 @@
 local karazhan = {}
-table.insert(karazhan, "Attumen the Huntsman")
-table.insert(karazhan, "Moroes")
-table.insert(karazhan, "Maiden of Virtue")
-table.insert(karazhan, "Opera Hall")
-table.insert(karazhan, "Nightbane")
-table.insert(karazhan, "The Curator")
-table.insert(karazhan, "Terestian Illhoof")
-table.insert(karazhan, "Shade of Aran")
-table.insert(karazhan, "Netherspite")
-table.insert(karazhan, "Prince Malchezaar")
+table.insert(karazhan, { encounterName = "Attumen the Huntsman", id = 652, targets = { "Attumen the Huntsman" } })
+table.insert(karazhan, { encounterName = "Moroes", id = 653, targets = { "Moroes" } })
+table.insert(karazhan, { encounterName = "Maiden of Virtue", id = 654, targets = { "Maiden of Virtue" } })
+table.insert(karazhan, { encounterName = "Opera Hall", id = 655, targets = { "Opera Hall" } })
+table.insert(karazhan, { encounterName = "Nightbane", id = 662, targets = { "Nightbane" } })
+table.insert(karazhan, { encounterName = "The Curator", id = 656, targets = { "The Curator" } })
+table.insert(karazhan, { encounterName = "Terestian Illhoof", id = 657, targets = { "Terestian Illhoof" } })
+table.insert(karazhan, { encounterName = "Shade of Aran", id = 658, targets = { "Shade of Aran" } })
+table.insert(karazhan, { encounterName = "Netherspite", id = 659, targets = { "Netherspite" } })
+table.insert(karazhan, { encounterName = "Prince Malchezaar", id = 661, targets = { "Prince Malchezaar" } })
 
 local gruulsLair = {}
-table.insert(gruulsLair, "High King Maulgar")
-table.insert(gruulsLair, "Gruul the Dragonkiller")
+table.insert(gruulsLair, { encounterName = "High King Maulgar", id = 649, targets = { "High King Maulgar" } })
+table.insert(gruulsLair, { encounterName = "Gruul the Dragonkiller", id = 650, targets = { "Gruul the Dragonkiller" } })
 
 local magtheridonsLair = {}
-table.insert(magtheridonsLair, "Magtheridon")
+table.insert(magtheridonsLair, { encounterName = "Magtheridon", id = 651, targets = { "Magtheridon" } })
 
 local ssc = {}
-table.insert(ssc, "The Lurker Below")
-table.insert(ssc, "Hydross the Unstable")
-table.insert(ssc, "Leotheras the Blind")
-table.insert(ssc, "Fathom-Lord Karathress")
-table.insert(ssc, "Morogrim Tidewalker")
-table.insert(ssc, "Lady Vashj")
+table.insert(ssc, { encounterName = "The Lurker Below", id = 624, targets = { "The Lurker Below" } })
+table.insert(ssc, { encounterName = "Hydross the Unstable", id = 623, targets = { "Hydross the Unstable" } })
+table.insert(ssc, { encounterName = "Leotheras the Blind", id = 625, targets = { "Leotheras the Blind" } })
+table.insert(ssc, { encounterName = "Fathom-Lord Karathress", id = 626, targets = { "Fathom-Lord Karathress" } })
+table.insert(ssc, { encounterName = "Morogrim Tidewalker", id = 627, targets = { "Morogrim Tidewalker" } })
+table.insert(ssc, { encounterName = "Lady Vashj", id = 628, targets = { "Lady Vashj" } })
 
 local tk = {}
-table.insert(tk, "High Astromancer Solarian")
-table.insert(tk, "A'lar")
-table.insert(tk, "Void Reaver")
-table.insert(tk, "Kael'thas Sunstrider")
+table.insert(tk, { encounterName = "High Astromancer Solarian", id = 732, targets = { "High Astromancer Solarian" } })
+table.insert(tk, { encounterName = "A'lar", id = 730, targets = { "A'lar" } })
+table.insert(tk, { encounterName = "Void Reaver", id = 731, targets = { "Void Reaver" } })
+table.insert(tk, { encounterName = "Kael'thas Sunstrider", id = 733, targets = { "Kael'thas Sunstrider" } })
 
 local hyjal = {}
-table.insert(hyjal, "Rage Winterchill")
-table.insert(hyjal, "Anetheron")
-table.insert(hyjal, "Kaz'rogal")
-table.insert(hyjal, "Azgalor")
-table.insert(hyjal, "Archimonde")
+table.insert(hyjal, { encounterName = "Rage Winterchill", id = 618, targets = { "Rage Winterchill" } })
+table.insert(hyjal, { encounterName = "Anetheron", id = 619, targets = { "Anetheron" } })
+table.insert(hyjal, { encounterName = "Kaz'rogal", id = 620, targets = { "Kaz'rogal" } })
+table.insert(hyjal, { encounterName = "Azgalor", id = 621, targets = { "Azgalor" } })
+table.insert(hyjal, { encounterName = "Archimonde", id = 622, targets = { "Archimonde" } })
 
 local bt = {}
-table.insert(bt, "High Warlord Naj'entus")
-table.insert(bt, "Supremus")
-table.insert(bt, "Shade of Akama")
-table.insert(bt, "Teron Gorefiend")
-table.insert(bt, "Reliquary of Souls")
-table.insert(bt, "Gurtogg Bloodboil")
-table.insert(bt, "Mother Shahraz")
-table.insert(bt, "The Illidari Council")
-table.insert(bt, "Illidan Stormrage")
+table.insert(bt, { encounterName = "High Warlord Naj'entus", id = 601, targets = { "High Warlord Naj'entus" } })
+table.insert(bt, { encounterName = "Supremus", id = 602, targets = { "Supremus" } })
+table.insert(bt, { encounterName = "Shade of Akama", id = 603, targets = { "Shade of Akama" } })
+table.insert(bt, { encounterName = "Teron Gorefiend", id = 604, targets = { "Teron Gorefiend" } })
+table.insert(bt, { encounterName = "Reliquary of Souls", id = 605, targets = { "Essence of Suffering" } })
+table.insert(bt, { encounterName = "Gurtogg Bloodboil", id = 606, targets = { "Gurtogg Bloodboil" } })
+table.insert(bt, { encounterName = "Mother Shahraz", id = 607, targets = { "Mother Shahraz" } })
+table.insert(bt, { encounterName = "The Illidari Council", id = 608, targets = { "Lady Malande", "Gathios the Shatterer", "Veras Darkshadow", "High Nethermancer Zerevor" } })
+table.insert(bt, { encounterName = "Illidan Stormrage", id = 609, targets = { "Illidan Stormrage" } })
 
 local za = {}
-table.insert(za, "Akil'zon")
-table.insert(za, "Nalorakk")
-table.insert(za, "Jan'alai")
-table.insert(za, "Halazzi")
-table.insert(za, "Hex Lord Malacrass")
-table.insert(za, "Daakara")
+table.insert(za, { encounterName = "Akil'zon", id = 1189, targets = { "Akil'zon" } })
+table.insert(za, { encounterName = "Nalorakk", id = 1190, targets = { "Nalorakk" } })
+table.insert(za, { encounterName = "Jan'alai", id = 1191, targets = { "Jan'alai" } })
+table.insert(za, { encounterName = "Halazzi", id = 1192, targets = { "Halazzi" } })
+table.insert(za, { encounterName = "Hex Lord Malacrass", id = 1193, targets = { "Hex Lord Malacrass" } })
+table.insert(za, { encounterName = "Zul'jin", id = 1194, targets = { "Zul'jin" } })
 
 local sunwell = {}
-table.insert(sunwell, "Kalecgos")
-table.insert(sunwell, "Brutallus")
-table.insert(sunwell, "Felmyst")
-table.insert(sunwell, "Eredar Twins")
-table.insert(sunwell, "M'uru")
-table.insert(sunwell, "Kil'jaeden")
+table.insert(sunwell, { encounterName = "Kalecgos", id = 724, targets = { "Kalecgos" } })
+table.insert(sunwell, { encounterName = "Brutallus", id = 725, targets = { "Brutallus" } })
+table.insert(sunwell, { encounterName = "Felmyst", id = 726, targets = { "Felmyst" } })
+table.insert(sunwell, { encounterName = "Eredar Twins", id = 727, targets = { "Lady Sacrolash", "Grand Warlock Alythess" } })
+table.insert(sunwell, { encounterName = "M'uru", id = 728, targets = { "M'uru" } })
+table.insert(sunwell, { encounterName = "Kil'jaeden", id = 729, targets = { "Kil'jaeden", "Hand of the Deceiver" } })
 
 local test = {}
-table.insert(test, "High Overlord Saurfang")
-table.insert(test, "Overlord Runthak")
+table.insert(test, { encounterName = "High Overlord Saurfang", id = 1, targets = { "High Overlord Saurfang" } })
+table.insert(test, { encounterName = "Overlord Runthak", id = 2, targets = { "Overlord Runthak" } })
 
 raids = {}
-raids["Karazhan"]             = karazhan
-raids["Gruul's Lair"]         = gruulsLair
-raids["Magtheridon's Lair"]   = magtheridonsLair
-raids["Serpentshrine Cavern"] = ssc
-raids["Tempest Keep"]         = tk
-raids["Hyjal Summit"]         = hyjal
-raids["Black Temple"]         = bt
-raids["Zul'Aman"]             = za
-raids["The Sunwell"]          = sunwell -- test this
--- raids["Orgrimmar"]            = test -- remove this
+raids["Karazhan"]             = { encounters = karazhan, currentEncounter = 1 }
+raids["Gruul's Lair"]         = { encounters = gruulsLair, currentEncounter = 1 }
+raids["Magtheridon's Lair"]   = { encounters = magtheridonsLair, currentEncounter = 1 }
+raids["Serpentshrine Cavern"] = { encounters = ssc, currentEncounter = 1 }
+raids["Tempest Keep"]         = { encounters = tk, currentEncounter = 1 }
+raids["Hyjal Summit"]         = { encounters = hyjal, currentEncounter = 1 }
+raids["Black Temple"]         = { encounters = bt, currentEncounter = 1 }
+raids["Zul'Aman"]             = { encounters = za, currentEncounter = 1 }
+raids["The Sunwell"]          = { encounters = sunwell, currentEncounter = 1 }
 
 raidAliases = {}
 raidAliases["The Eye"]                    = "Tempest Keep"
--- raidAliases["Sunwell Plateau"]            = "The Sunwell"
+-- raidAliases["Sunwell Plateau"]            = "The Sunwell" -- maybe unnecessary?
 raidAliases["The Battle for Mount Hyjal"] = "Hyjal Summit"
 
 currentEncounters = {}
