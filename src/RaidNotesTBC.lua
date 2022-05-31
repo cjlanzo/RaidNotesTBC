@@ -54,7 +54,7 @@ function RaidNotes:ENCOUNTER_START(_, encounterName)
 end
 
 function RaidNotes:ENCOUNTER_END(encounterID, encounterName, _, _, success)
-	if not success or success == false then return end
+	if success == 0 then return end
 
 	local zone = GetZoneText()
 

@@ -83,7 +83,7 @@ raids["The Sunwell"]          = sunwell -- test this
 
 raidAliases = {}
 raidAliases["The Eye"]                    = "Tempest Keep"
-raidAliases["Sunwell Plateau"]            = "The Sunwell"
+-- raidAliases["Sunwell Plateau"]            = "The Sunwell"
 raidAliases["The Battle for Mount Hyjal"] = "Hyjal Summit"
 
 currentEncounters = {}
@@ -116,16 +116,11 @@ function UpdateCurrentEncounters(zone)
 
 	for i = 1, GetNumSavedInstances() do
 		local name,_,_,_,_,_,_,_,_,_,_,encounterProgress = GetSavedInstanceInfo(i)
-		local _,_,isKilled,_ = GetSavedInstanceEncounterInfo(i, encounterProgress) -- be weary of bug where havent cleared instance and this is wrong
 		local zone = MapEncounterToZone(name)
 
 		for k,_ in pairs(currentEncounters) do
 			if k == zone then
-				if isKilled then
-					currentEncounters[k] = encounterProgress + 1
-				else    
-					currentEncounters[k] = encounterProgress
-				end
+				currentEncounters[k] = encounterProgress + 1
 			end
 		end
 	end
