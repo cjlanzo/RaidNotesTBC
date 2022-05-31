@@ -78,12 +78,12 @@ raids["Tempest Keep"]         = tk
 raids["Hyjal Summit"]         = hyjal
 raids["Black Temple"]         = bt
 raids["Zul'Aman"]             = za
-raids["The Sunwell"]          = sunwell -- test this
+raids["The Sunwell"]          = sunwell
 -- raids["Orgrimmar"]            = test -- remove this
 
 raidAliases = {}
 raidAliases["The Eye"]                    = "Tempest Keep"
--- raidAliases["Sunwell Plateau"]            = "The Sunwell"
+raidAliases["Sunwell Plateau"]            = "The Sunwell"
 raidAliases["The Battle for Mount Hyjal"] = "Hyjal Summit"
 
 currentEncounters = {}
