@@ -94,7 +94,8 @@ function RaidNotes:PLAYER_TARGET_CHANGED()
 end
 
 local function UpdateNotesOnZoneChange()
-	local zone = GetZoneText()
+	local literalZone = GetZoneText()
+	local zone = raidAliases[literalZone] or literalZone
 	
 	if not currentEncounters[zone] then RaidNotes:HideNotes() return end
 

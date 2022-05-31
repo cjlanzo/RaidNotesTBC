@@ -1,3 +1,6 @@
+## 1.0.3 (2022-05-31)
+* Fixed issue where SWP was not loading notes
+
 ## 1.0.2 (2022-05-31)
 * Fixed issue where notes would advance to the next encounter on a wipe
 
