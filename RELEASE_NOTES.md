@@ -1,3 +1,8 @@
+## 1.1.0 (2022-06-15)
+* Overhauled backend
+* Fixed issues with sunwell not working
+* Fixed issues where bosses that had multiple different bosses weren't working
+
 ## 1.0.3 (2022-05-31)
 * Fixed issue where SWP was not loading notes
 
