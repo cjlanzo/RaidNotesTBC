@@ -1,4 +1,4 @@
-## 1.1.0 (2022-06-21)
+## 2.0.0 (2022-06-21)
 * Overhauled backend
 * Fixed issues with sunwell not working
 * Fixed issues where bosses that had multiple different bosses weren't working
