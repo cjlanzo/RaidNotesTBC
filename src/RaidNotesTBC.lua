@@ -101,8 +101,7 @@ end
 
 function RaidNotes:PLAYER_ENTERING_WORLD()
     debugPrint("PLAYER_ENTERING_WORLD")
-    updateCurrentEncounters()
-    -- updateNotesOnZoneChange("PLAYER_ENTERING_WORLD")
+    updateCurrentEncounters()                                                                                               
 end
 
 function RaidNotes:PLAYER_LOGOUT()

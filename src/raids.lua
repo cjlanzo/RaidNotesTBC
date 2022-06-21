@@ -1,7 +1,14 @@
-instanceSavedNameLookup = invert(instancesDb, function(instance) return instance.savedInstanceName end)
-instanceNameLookup = invert(instancesDb, function(instance) return instance.instanceName end)
+instanceSavedNameLookup = {}
+instanceNameLookup = {}
+instanceProgress = {}
+
+iterDict(instancesDb, function(instanceID, instance)
+    instanceSavedNameLookup[instance.savedInstanceName] = instanceID
+    instanceNameLookup[instance.instanceName] = instanceID
+    instanceProgress[instanceID] = 1
+end)
+
 instanceEncountersLookup = groupBy(encountersDb, function(encounter) return encounter.instanceID end)
-instanceProgress = setTo(instancesDb, 1)
 encounterNameLookup = collect(encountersDb, function(encounter)
     local targets = prepend(encounter.alternativeTargets, encounter.encounterName)
     return mapDict(targets, function(_,t) return t, encounter.encounterID end)

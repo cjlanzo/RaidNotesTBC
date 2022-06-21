@@ -18,10 +18,10 @@ end
 function nullOrEmpty(s) return not s or s == "" end
 
 -- Arrays
-function map(dict, fn)
+function map(arr, fn)
     local t = {}
     
-    for k,v in pairs(dict) do
+    for k,v in pairs(arr) do
         table.insert(t, fn(v))
     end
     
@@ -88,6 +88,16 @@ function prepend(arr, item)
     return t
 end
 
+function sortBy(arr, fn)
+    local s_arr = arr
+
+    table.sort(s_arr, function(a,b)
+        return fn(a) < fn(b)
+    end)
+
+    return s_arr
+end
+
 -- Dicts
 function mapDict(dict, fn)
     local t = {}
@@ -100,6 +110,12 @@ function mapDict(dict, fn)
     return t
 end
 
+function iterDict(dict, fn)
+    for k,v in pairs(dict) do
+        fn(k,v)
+    end
+end
+
 function invert(dict, fn)
     local t = {}
 
@@ -108,16 +124,6 @@ function invert(dict, fn)
     end
 
     return t
-end
-
-function sortBy(arr, fn)
-    local s_arr = arr
-
-    table.sort(s_arr, function(a,b)
-        return fn(a) < fn(b)
-    end)
-
-    return s_arr
 end
 
 function asArray(dict)
