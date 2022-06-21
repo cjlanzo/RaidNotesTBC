@@ -1,0 +1,37 @@
+name: Run Develop Branch Auto Build
+on: 
+  push: 
+    branches:
+      - develop
+      - '*-develop'
+jobs:
+  run_build:
+    env:
+      defaultPublishTarget: Publish     # Set to the build target (ex: NugetDeploy or OctoPublish)
+      uploadDeployPackage: false        # set to true if you want this build to be scanned by blackduck later
+      releaseNotesPath: ''              # the path to the release notes, required if uploadDeployPackage is set to true
+      deployPackage: ''                 # the path to your deployment package, required of uploadDeployPackage is set to true
+      checkoutDir: '../../qa-test-config'
+
+    runs-on: [std-fake-runner, no-db]
+    steps:
+      - name: Checkout Source Code
+        uses: LexisNexis-GHA-Public/checkout@v2.3.4.2
+        with:
+          path: ${{ env.checkoutDir }}
+          allow_parent_path: true
+        id: checkout
+
+      - name: Run Build using FAKE
+        id: run-build
+        run: ./build.cmd ${{ env.defaultPublishTarget }}
+        working-directory: ${{ steps.checkout.outputs.WORKSPACE_DIR }}
+ 
+      - name: Uploading Nuget package for Scanning
+        if: ${{ env.uploadDeployPackage == 'true' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: qa-test-config.${{ github.sha }}
+          path: |
+            ${{ steps.checkout.outputs.WORKSPACE_DIR }}${{ env.releaseNotesPath }}
+            ${{ steps.checkout.outputs.WORKSPACE_DIR }}${{ env.deployPackage }}

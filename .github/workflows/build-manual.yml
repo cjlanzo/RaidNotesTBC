@@ -1,0 +1,22 @@
+name: Run Manual Build
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        type: choice
+        description: Build Target
+        default: build
+        options:
+        - build
+        - publish
+        - release
+jobs:
+  run_build:
+    runs-on: windows-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Run build
+        run: ./build.cmd ${{ env.defaultPublishTarget }}
+      - name: List build files
+        run: ls ./build
