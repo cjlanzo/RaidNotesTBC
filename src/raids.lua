@@ -22,15 +22,15 @@ function setCurrentEncounter(encounterID)
     instanceProgress[encounter.instanceID] = encounter.encounterIndex
 end
 
-local function findByEncounterIndex(index)
-    return findBy(encountersDb, function(e) return e.encounterIndex == index end)
+local function findByEncounterIndex(instanceID, index)
+    return findBy(instanceEncountersLookup[instanceID], function(e) return e.encounterIndex == index end)
 end
 
 function getCurrentEncounterByInstance(instanceID)
     local encounterIndex = instanceProgress[instanceID]
-    local encounter = findByEncounterIndex(encounterIndex)
+    local encounter = findByEncounterIndex(instanceID, encounterIndex)
 
-    debugPrint(string.format("Searching for encounter with index %d, found '%s'", encounterIndex, encounter and encounter.encounterName or tostring(nil)))
+    debugPrint(string.format("Searching for encounter in instance %d with index %d, found '%s'", instanceID, encounterIndex, encounter and encounter.encounterName or tostring(nil)))
 
     return encounter
 end
@@ -39,9 +39,9 @@ function getNextEncounter(encounterID)
     local encounter = encountersDb[encounterID]
     local nextEncounterIndex = encounter.encounterIndex + 1
 
-    local nextEncounter = findByEncounterIndex(nextEncounterIndex)
+    local nextEncounter = findByEncounterIndex(encounter.instanceID, nextEncounterIndex)
 
-    debugPrint(string.format("Searching for next encounter with index %d, found '%s'", nextEncounterIndex, nextEncounter.encounterName or tostring(nil)))
+    debugPrint(string.format("Searching for next encounter in instance %d with index %d, found '%s'", encounter.instanceID, nextEncounterIndex, nextEncounter and nextEncounter.encounterName or tostring(nil)))
 
     return nextEncounter
 end
