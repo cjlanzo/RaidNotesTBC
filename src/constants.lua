@@ -1,2 +1,2 @@
 ADDON_NAME = "RaidNotesTBC"
-DEBUG_MODE = true
+DEBUG_MODE = false
