@@ -4,6 +4,10 @@ function debugPrint(msg)
     print("|cffffff00RaidNotesTBC: |r"..msg)
 end
 
+function getZone() return TEST_MODE and TEST_ZONE or GetZoneText() end
+
+function getTarget() return TEST_MODE and TEST_TARGET or (not UnitIsDead("target") and UnitName("target") or nil) end
+
 -- Strings
 function split(s, delimiter)
     local result = {}

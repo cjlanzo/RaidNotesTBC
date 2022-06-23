@@ -1,5 +1,8 @@
+## 2.0.1 (2022-06-23)
+* [internal] Made code more debuggable
+
 ## 2.0.0 (2022-06-21)
-* Overhauled backend
+* [internal] Overhauled backend
 * Fixed issues with sunwell not working
 * Fixed issues where bosses that had multiple different bosses weren't working
 

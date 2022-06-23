@@ -11,17 +11,34 @@ function RaidNotes:OnInitialize()
     self:Print("Welcome to RaidNotesTBC")
 
     initEncounterNotes(self.db.char)
+    updateCurrentEncounters()
 
-    self:RegisterEvent("ENCOUNTER_START")
-    self:RegisterEvent("ENCOUNTER_END")
-    self:RegisterEvent("PLAYER_TARGET_CHANGED")
-    self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-    self:RegisterEvent("ZONE_CHANGED")
-    self:RegisterEvent("ZONE_CHANGED_INDOORS")
-    self:RegisterEvent("PLAYER_ENTERING_WORLD")
-    self:RegisterEvent("PLAYER_LOGOUT")
+    local eventMap = {
+        ["ENCOUNTER_START"]       = "HandleEncounterStart",
+        ["ENCOUNTER_END"]         = "HandleEncounterEnd",
+        ["PLAYER_TARGET_CHANGED"] = "HandlePlayerTargetChanged",
+        ["ZONE_CHANGED"]          = "HandleZoneChanged",
+        ["ZONE_CHANGED_NEW_AREA"] = "HandleZoneChanged",
+        ["ZONE_CHANGED_INDOORS"]  = "HandleZoneChanged",
+        ["PLAYER_ENTERING_WORLD"] = "HandlePlayerEnteringWorld",
+        ["PLAYER_LOGOUT"]         = "HandlePlayerLogout",
+    }
+
+    iterDict(eventMap, function(event, handler) self:RegisterEvent(event, handler) end)
 
     self:DrawMinimapIcon()
+
+    -- test code below here
+    -- if not DEBUG_MODE then return end
+    
+    -- RaidNotes:HandleZoneChanged()
+    -- RaidNotes:HandleEncounterStart(725, "Brutallus")
+    -- RaidNotes:HandleEncounterStart(1800, "nilmonster")
+    -- RaidNotes:HandleEncounterEnd(725, "Brutallus", nil, nil, 1)
+    -- RaidNotes:HandleEncounterEnd(729, "Kil'Jaeden")
+    -- RaidNotes:HandlePlayerTargetChanged()
+
+    -- TEST_MODE = false
 end
 
 function RaidNotes:LoadFramePosition()
@@ -37,7 +54,7 @@ function RaidNotes:LoadFramePosition()
     end
 end
 
-function RaidNotes:ENCOUNTER_START(encounterID, encounterName)
+function RaidNotes:HandleEncounterStart(event, encounterID, encounterName)
     debugPrint(string.format("ENCOUNTER_START - %s - %d", encounterName, encounterID))
     
     if not encountersDb[encounterID] then return end
@@ -46,7 +63,38 @@ function RaidNotes:ENCOUNTER_START(encounterID, encounterName)
     setCurrentEncounter(encounterID)
 end
 
-function RaidNotes:ENCOUNTER_END(encounterID, encounterName, _, _, success)
+-- function encounterAsNotes(encounterID)
+--     local notes = getEncounterNotes(encounterID)
+
+--     return {
+
+--     }
+-- end
+
+-- function mapEncounterToNotes(encounterID)
+--     -- issue: sometimes encounter=nil means instance complete, sometimes it means 
+--     local encounter = encountersDb[encounterID] -- this can be nil
+--     local notes = getEncounterNotes(encounterID) -- ^^ this will be {} if nil
+--     -- if nil -> {}, else { notes in here ... }
+
+--     return (not encounter) and {} or {
+--         ["title"] = encounter.encounterName,
+--         ["boss"] = encounter.
+--     }
+
+--     return {
+        
+--     }
+-- end
+
+-- local result = encountersDb[encounterID]
+-- result = 
+
+-- figure out what the encounter is
+-- update the notes for the encounter
+-- perform any other updates
+
+function RaidNotes:HandleEncounterEnd(event, encounterID, encounterName, _, _, success)
     debugPrint(string.format("ENCOUNTER_END - %s - %d - %s", encounterName, encounterID, tostring(success == 1)))
 
     if success == 0 then return end
@@ -60,22 +108,22 @@ function RaidNotes:ENCOUNTER_END(encounterID, encounterName, _, _, success)
     setCurrentEncounter(nextEncounter.encounterID)
 end
 
-function RaidNotes:PLAYER_TARGET_CHANGED()
-    if UnitIsDead("target") then return end
-    
-    local target = UnitName("target")
+function RaidNotes:HandlePlayerTargetChanged(event)
+    local target = getTarget()
     local encounterID = encounterNameLookup[target]
-
+    
     if not encounterID then return end
-
-    RaidNotes:DisplayEncounterNotes(target, getEncounterNotes(encounterID))
+    
+    local encounter = encountersDb[encounterID]
+    
+    RaidNotes:DisplayEncounterNotes(encounter.encounterName, getEncounterNotes(encounterID))
     setCurrentEncounter(encounterID)
 end
 
-local function updateNotesOnZoneChange(sourceEvent)
-    local zone = GetZoneText()
+local function RaidNotes:HandleZoneChanged(event)
+    local zone = getZone()
 
-    debugPrint(string.format("%s - %s", sourceEvent, zone))
+    debugPrint(string.format("%s - %s", event, zone))
     
     local instanceID = instanceNameLookup[zone]
     if not instanceID then RaidNotes:HideNotes() return end
@@ -87,29 +135,12 @@ local function updateNotesOnZoneChange(sourceEvent)
     RaidNotes:DisplayEncounterNotes(currentEncounter.encounterName, getEncounterNotes(currentEncounter.encounterID))
 end
 
-function RaidNotes:ZONE_CHANGED()
-    updateNotesOnZoneChange("ZONE_CHANGED")
-end
-
-function RaidNotes:ZONE_CHANGED_NEW_AREA()
-    updateNotesOnZoneChange("ZONE_CHANGED_NEW_AREA")
-end
-
-function RaidNotes:ZONE_CHANGED_INDOORS()
-    updateNotesOnZoneChange("ZONE_CHANGED_INDOORS")
-end
-
-function RaidNotes:PLAYER_ENTERING_WORLD()
-    debugPrint("PLAYER_ENTERING_WORLD")
-    updateCurrentEncounters()                                                                                               
-end
-
-function RaidNotes:PLAYER_LOGOUT()
+function RaidNotes:HandlePlayerLogout()
     self.db.char.framePos = RaidNotes:GetNotesFramePosition()
     self.db.char.encounters = encounterNotes
 end
 
-function RaidNotes:ShouldDisplayNotes() return instanceNameLookup[GetZoneText()] end
+function RaidNotes:ShouldDisplayNotes() return instanceNameLookup[getZone()] end
 
 function RaidNotes:DrawMinimapIcon()
     libDBIcon:Register(
