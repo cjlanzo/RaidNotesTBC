@@ -4,7 +4,7 @@ local AceGUI = _G.LibStub("AceGUI-3.0")
 local f
 
 function RaidNotes:LockNotes()
-    f.frame:DisableDrawLayer("BACKGROUND")
+    -- f.frame:DisableDrawLayer("BACKGROUND")
     f.frame:DisableDrawLayer("BORDER")
     f.frame:SetResizable(false)
     f.frame:SetMovable(false)
@@ -14,12 +14,23 @@ function RaidNotes:LockNotes()
     f.sizer_s:Hide()
     f.title:Hide()
     f.titletext:Hide()
+    f.titlebg:Hide()
+
+    -- local backdrop = f.frame:GetBackdrop()
+    -- print(backdrop)
+
+    -- for k,v in pairs(f.frame:GetChildren()) do
+    --     print(k)
+    --     print(v)
+
+    -- end
+    -- -- print(f.frame:GetChildren())
 end
 
 function RaidNotes:UnlockNotes()
     if not f then self:InitNotes() end
     
-    f.frame:EnableDrawLayer("BACKGROUND")
+    -- f.frame:EnableDrawLayer("BACKGROUND")
     f.frame:EnableDrawLayer("BORDER")
     f.frame:SetResizable(true)
     f.frame:SetMovable(true)
@@ -29,14 +40,17 @@ function RaidNotes:UnlockNotes()
     f.sizer_s:Show()
     f.title:Show()
     f.titletext:Show()
+    f.titlebg:Show()
 end
 
 function RaidNotes:InitNotes()
-    f = AceGUI:Create("Window")
+    f = AceGUI:Create("NotesWidget")
+    -- f = AceGUI:Create("Window")
     f:Hide()
     f:SetTitle("Drag me")
     f.frame:SetFrameStrata("BACKGROUND")
     f.frame:EnableMouse(false)
+    f.dialogbg:SetAlpha(0.5)
 
     local framePos = RaidNotes:LoadFramePosition()
     f:ClearAllPoints()
@@ -67,7 +81,8 @@ end
 
 function RaidNotes:CreateNotesLabel(parent, name, text)
     local label = AceGUI:Create("Label")
-    label:SetFontObject(GameFontNormalLarge)
+    -- label:SetFontObject(GameFontNormalLarge)
+    label:SetFont("Fonts\\ARIALN.ttf", 16)
     label:SetRelativeWidth(1)
 
     if text then label:SetText(text) end

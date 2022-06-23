@@ -13,5 +13,6 @@ RaidsDb.lua
 Raids.lua
 UserNotes.lua
 RaidNotesTBC.lua
+NotesWidget.lua
 Journal.lua
 Notes.lua

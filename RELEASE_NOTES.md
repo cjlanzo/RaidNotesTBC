@@ -2,6 +2,7 @@
 * [internal] Made code more debuggable
 * [internal] Improved iterating through saved instances
 * Improved 'Raid Complete' message
+* Updated Notes window to have background and better font size
 
 ## 2.0.0 (2022-06-21)
 * [internal] Overhauled backend
