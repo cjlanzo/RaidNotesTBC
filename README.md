@@ -23,6 +23,5 @@ RaidNotesTBC is an addon that allows you to set personal raid notes for each bos
 
 ## Known Issues
 
-* Trying to save notes without selecting a raid and boss results in an error and nothing happens
 * Notes can be dragged off screen and it causes them to disappear. If you reload your UI it will reappear as a workaround for now
 * Boss notes don't take the spot of Trash notes when they are missing and it shows a gap
