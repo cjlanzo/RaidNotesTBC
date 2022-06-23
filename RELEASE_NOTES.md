@@ -1,5 +1,7 @@
 ## 2.0.1 (2022-06-23)
 * [internal] Made code more debuggable
+* [internal] Improved iterating through saved instances
+* Improved 'Raid Complete' message
 
 ## 2.0.0 (2022-06-21)
 * [internal] Overhauled backend

@@ -48,8 +48,7 @@ end
 
 -- "bug" in here that makes instances such as BT not function correctly because of boss skips
 function updateCurrentEncounters()
-    for i = 1, GetNumSavedInstances() do
-        local savedInstanceName,_,_,_,_,_,_,_,_,_,_,encounterProgress = GetSavedInstanceInfo(i)
+    for _, savedInstanceName, encounterProgress in savedInstances() do
         local instance = instancesDb[instanceSavedNameLookup[savedInstanceName]]
         local currentIndex = encounterProgress + 1
 

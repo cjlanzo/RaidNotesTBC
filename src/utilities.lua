@@ -4,9 +4,33 @@ function debugPrint(msg)
     print("|cffffff00RaidNotesTBC: |r"..msg)
 end
 
+function iterSavedInstances(_, i)
+    i = i + 1
+    local a,b = getSavedInstanceInfo(i)
+
+    if a then return i, a, b end
+end
+
+function savedInstances()
+    return iterSavedInstances, {}, 0
+end
+
 function getZone() return TEST_MODE and TEST_ZONE or GetZoneText() end
 
 function getTarget() return TEST_MODE and TEST_TARGET or (not UnitIsDead("target") and UnitName("target") or nil) end
+
+function getSavedInstanceInfo(index)
+    if TEST_MODE then 
+        local t = TEST_INSTANCE_INFO[index]
+
+        if not t then return nil, 0 end
+        
+        return unpack(t)
+    else
+        local savedInstanceName,_,_,_,_,_,_,_,_,_,_,encounterProgress = GetSavedInstanceInfo(index)
+        return savedInstanceName, encounterProgress
+    end
+end
 
 -- Strings
 function split(s, delimiter)

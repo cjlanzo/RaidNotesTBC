@@ -20,7 +20,6 @@ function RaidNotes:OnInitialize()
         ["ZONE_CHANGED"]          = "HandleZoneChanged",
         ["ZONE_CHANGED_NEW_AREA"] = "HandleZoneChanged",
         ["ZONE_CHANGED_INDOORS"]  = "HandleZoneChanged",
-        ["PLAYER_ENTERING_WORLD"] = "HandlePlayerEnteringWorld",
         ["PLAYER_LOGOUT"]         = "HandlePlayerLogout",
     }
 
@@ -29,16 +28,14 @@ function RaidNotes:OnInitialize()
     self:DrawMinimapIcon()
 
     -- test code below here
-    -- if not DEBUG_MODE then return end
+    if not TEST_MODE then return end
     
-    -- RaidNotes:HandleZoneChanged()
-    -- RaidNotes:HandleEncounterStart(725, "Brutallus")
-    -- RaidNotes:HandleEncounterStart(1800, "nilmonster")
-    -- RaidNotes:HandleEncounterEnd(725, "Brutallus", nil, nil, 1)
-    -- RaidNotes:HandleEncounterEnd(729, "Kil'Jaeden")
-    -- RaidNotes:HandlePlayerTargetChanged()
-
-    -- TEST_MODE = false
+    -- RaidNotes:HandleZoneChanged("ZONE_CHANGED")
+    -- RaidNotes:HandleEncounterStart("ENCOUNTER_START", 725, "Brutallus")
+    -- RaidNotes:HandleEncounterStart("ENCOUNTER_START", 1800, "nilmonster")
+    -- RaidNotes:HandleEncounterEnd("ENCOUNTER_END", 725, "Brutallus", nil, nil, 1)
+    -- RaidNotes:HandleEncounterEnd("ENCOUNTER_END", 729, "Kil'Jaeden", nil, nil, 1)
+    -- RaidNotes:HandlePlayerTargetChanged("PLAYER_TARGET_CHANGED")
 end
 
 function RaidNotes:LoadFramePosition()
@@ -63,46 +60,15 @@ function RaidNotes:HandleEncounterStart(event, encounterID, encounterName)
     setCurrentEncounter(encounterID)
 end
 
--- function encounterAsNotes(encounterID)
---     local notes = getEncounterNotes(encounterID)
-
---     return {
-
---     }
--- end
-
--- function mapEncounterToNotes(encounterID)
---     -- issue: sometimes encounter=nil means instance complete, sometimes it means 
---     local encounter = encountersDb[encounterID] -- this can be nil
---     local notes = getEncounterNotes(encounterID) -- ^^ this will be {} if nil
---     -- if nil -> {}, else { notes in here ... }
-
---     return (not encounter) and {} or {
---         ["title"] = encounter.encounterName,
---         ["boss"] = encounter.
---     }
-
---     return {
-        
---     }
--- end
-
--- local result = encountersDb[encounterID]
--- result = 
-
--- figure out what the encounter is
--- update the notes for the encounter
--- perform any other updates
-
 function RaidNotes:HandleEncounterEnd(event, encounterID, encounterName, _, _, success)
     debugPrint(string.format("ENCOUNTER_END - %s - %d - %s", encounterName, encounterID, tostring(success == 1)))
 
-    if success == 0 then return end
+    if not success or success == 0 then return end
     if not encountersDb[encounterID] then return end
 
     local nextEncounter = getNextEncounter(encounterID)
 
-    if not nextEncounter then RaidNotes:DisplayEncounterNotes("Raid Complete!", {}) return end -- refactor?
+    if not nextEncounter then RaidNotes:DisplayEncounterNotes(string.format("%s Complete!", instancesDb[encountersDb[encounterID].instanceID].instanceName), {}) return end -- refactor?
 
     RaidNotes:DisplayEncounterNotes(nextEncounter.encounterName, getEncounterNotes(nextEncounter.encounterID))
     setCurrentEncounter(nextEncounter.encounterID)
@@ -120,7 +86,7 @@ function RaidNotes:HandlePlayerTargetChanged(event)
     setCurrentEncounter(encounterID)
 end
 
-local function RaidNotes:HandleZoneChanged(event)
+function RaidNotes:HandleZoneChanged(event)
     local zone = getZone()
 
     debugPrint(string.format("%s - %s", event, zone))
@@ -130,7 +96,7 @@ local function RaidNotes:HandleZoneChanged(event)
 
     local currentEncounter = getCurrentEncounterByInstance(instanceID)
 
-    if not currentEncounter then RaidNotes:DisplayEncounterNotes("Raid Complete!", {}) return end -- refactor this, used twice
+    if not currentEncounter then RaidNotes:DisplayEncounterNotes(string.format("%s Complete!", instancesDb[instanceID].instanceName), {}) return end -- refactor this, used twice
 
     RaidNotes:DisplayEncounterNotes(currentEncounter.encounterName, getEncounterNotes(currentEncounter.encounterID))
 end
