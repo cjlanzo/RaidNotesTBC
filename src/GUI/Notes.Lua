@@ -47,63 +47,23 @@ function RaidNotes:InitNotes()
 
     RaidNotes:LockNotes()
 
-    self:CreateNotesLabel(f, "TitleHeader")
-    self:CreateNotesLabelGroup(f, "Trash")
-    self:CreateNotesLabelGroup(f, "Boss")
-    
-    _G["NotesMainFrame"] = f
-end
-
-function RaidNotes:CreateNotesLabelGroup(parent, name)
-    local group = AceGUI:Create("SimpleGroup")
-    group:SetRelativeWidth(1)
-
-    RaidNotes:CreateNotesLabel(group, name.."Spacer", "\n")
-    RaidNotes:CreateNotesLabel(group, name.."Header", name.." Notes:")
-    RaidNotes:CreateNotesLabel(group, name.."Notes")
-
-    _G["Notes"..name.."Group"] = group
-    parent:AddChild(group)
-end
-
-function RaidNotes:CreateNotesLabel(parent, name, text)
     local label = AceGUI:Create("Label")
     label:SetFont("Fonts\\ARIALN.ttf", 16)
     label:SetRelativeWidth(1)
 
-    if text then label:SetText(text) end
+    _G["NotesText"] = label
+    f:AddChild(label)
 
-    _G["Notes"..name] = label
-
-    parent:AddChild(label)
+    RaidNotes:DisplayNotes("Trash:\n- Sample trash\n\nBoss:\n- Sample boss\n\n")
 end
 
-function RaidNotes:DisplayEncounterNotes(notes)
+function RaidNotes:DisplayNotes(str)
     if not f then self:InitNotes() end
 
-    local function hideIfEmpty(groupName)
-        -- these ids suck
-        local text = _G[string.format("Notes%sNotes", groupName)].label:GetText()
-        local group = _G[string.format("Notes%sGroup", groupName)].frame
-        group:Show()
-
-        if nullOrEmpty(text) then
-            group:Hide()
-        end
-    end
+    debugPrint("Called RaidNotes:DisplayNotes()")
 
     self:ShowNotes()
-
-    debugPrint(string.format("Displaying notes for '%s'", notes.title))
-
-    _G["NotesTitleHeader"]:SetText(notes.title or "")
-    _G["NotesTrashNotes"]:SetText(notes.trash or "")
-    _G["NotesBossNotes"]:SetText(notes.boss or "")
-
-    f:DoLayout()
-
-    hideIfEmpty("Trash")
-    hideIfEmpty("Boss")
+   _G["NotesText"]:SetText(str)
 end
 
 function RaidNotes:ShowNotes()
@@ -113,7 +73,10 @@ function RaidNotes:ShowNotes()
 end
 
 function RaidNotes:HideNotes() 
-    if f then f:Hide() end
+    if f then 
+        debugPrint("Called RaidNotes:Hide()")
+        f:Hide()
+    end
 end
 
 function RaidNotes:ToggleNotes()

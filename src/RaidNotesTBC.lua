@@ -39,6 +39,7 @@ function RaidNotes:OnInitialize()
         ["ENCOUNTER_END"]         = mapEncounterEnd,
         ["PLAYER_TARGET_CHANGED"] = mapPlayerTargetChanged,
         ["ZONE_CHANGED_NEW_AREA"] = mapZoneChanged,
+        ["PLAYER_ENTERING_WORLD"] = mapZoneChanged,
     }
     
     iterDict(eventMap, function(event, mappingFn)
@@ -52,10 +53,10 @@ end
 function RaidNotes:EventHandler(event, mappingFn)
     return function(...)
         debugPrint(argsToString(...))
-        local notes = mappingFn(sliceArgs(2, ...))
+        local n = mappingFn(sliceArgs(2, ...))
 
-        if not notes then RaidNotes:HideNotes()
-        elseif not isEmpty(notes) then RaidNotes:DisplayEncounterNotes(notes)
+        if n.action == "hide" then RaidNotes:HideNotes()
+        elseif n.action == "show" then RaidNotes:DisplayNotes(n.value)
         end
     end
 end

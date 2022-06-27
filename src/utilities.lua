@@ -45,6 +45,8 @@ end
 
 function nullOrEmpty(s) return not s or s == "" end
 
+function contains(s, pattern) return string.find(s, pattern) ~= nil end
+
 -- Arrays
 function map(arr, fn)
     local t = {}

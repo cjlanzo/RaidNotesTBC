@@ -15,8 +15,6 @@ RaidNotesTBC is an addon that allows you to set personal raid notes for each bos
 ## Todo
 
 * Make notes advance to the next trash section as a boss encounter begins (so you see current boss and the trash after it rather than before)
-* Clean up editor to show name of boss that is being edited. Also hide the edit boxes unless a boss is selected
-* Open editor to the current boss for the current zone
 * Allow customization of boss routing with an instance
 * Add options to allow customization of font size, notes opacity, etc
 * Add version outdated notification on login
@@ -24,4 +22,3 @@ RaidNotesTBC is an addon that allows you to set personal raid notes for each bos
 ## Known Issues
 
 * Notes can be dragged off screen and it causes them to disappear. If you reload your UI it will reappear as a workaround for now
-* Boss notes don't take the spot of Trash notes when they are missing and it shows a gap
