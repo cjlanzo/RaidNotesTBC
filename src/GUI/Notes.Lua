@@ -4,7 +4,6 @@ local AceGUI = _G.LibStub("AceGUI-3.0")
 local f
 
 function RaidNotes:LockNotes()
-    -- f.frame:DisableDrawLayer("BACKGROUND")
     f.frame:DisableDrawLayer("BORDER")
     f.frame:SetResizable(false)
     f.frame:SetMovable(false)
@@ -15,22 +14,11 @@ function RaidNotes:LockNotes()
     f.title:Hide()
     f.titletext:Hide()
     f.titlebg:Hide()
-
-    -- local backdrop = f.frame:GetBackdrop()
-    -- print(backdrop)
-
-    -- for k,v in pairs(f.frame:GetChildren()) do
-    --     print(k)
-    --     print(v)
-
-    -- end
-    -- -- print(f.frame:GetChildren())
 end
 
 function RaidNotes:UnlockNotes()
     if not f then self:InitNotes() end
     
-    -- f.frame:EnableDrawLayer("BACKGROUND")
     f.frame:EnableDrawLayer("BORDER")
     f.frame:SetResizable(true)
     f.frame:SetMovable(true)
@@ -45,7 +33,6 @@ end
 
 function RaidNotes:InitNotes()
     f = AceGUI:Create("NotesWidget")
-    -- f = AceGUI:Create("Window")
     f:Hide()
     f:SetTitle("Drag me")
     f.frame:SetFrameStrata("BACKGROUND")
@@ -81,7 +68,6 @@ end
 
 function RaidNotes:CreateNotesLabel(parent, name, text)
     local label = AceGUI:Create("Label")
-    -- label:SetFontObject(GameFontNormalLarge)
     label:SetFont("Fonts\\ARIALN.ttf", 16)
     label:SetRelativeWidth(1)
 
@@ -92,7 +78,7 @@ function RaidNotes:CreateNotesLabel(parent, name, text)
     parent:AddChild(label)
 end
 
-function RaidNotes:DisplayEncounterNotes(encounterName, notes)
+function RaidNotes:DisplayEncounterNotes(notes)
     if not f then self:InitNotes() end
 
     local function hideIfEmpty(groupName)
@@ -108,9 +94,9 @@ function RaidNotes:DisplayEncounterNotes(encounterName, notes)
 
     self:ShowNotes()
 
-    debugPrint(string.format("Displaying notes for '%s'", encounterName))
+    debugPrint(string.format("Displaying notes for '%s'", notes.title))
 
-    _G["NotesTitleHeader"]:SetText(string.format("-= %s =-", encounterName))
+    _G["NotesTitleHeader"]:SetText(notes.title or "")
     _G["NotesTrashNotes"]:SetText(notes.trash or "")
     _G["NotesBossNotes"]:SetText(notes.boss or "")
 

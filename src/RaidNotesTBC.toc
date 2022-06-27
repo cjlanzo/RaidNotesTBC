@@ -12,7 +12,9 @@ Utilities.lua
 RaidsDb.lua
 Raids.lua
 UserNotes.lua
+Mappers.lua
 RaidNotesTBC.lua
 NotesWidget.lua
 Journal.lua
 Notes.lua
+Tests.lua

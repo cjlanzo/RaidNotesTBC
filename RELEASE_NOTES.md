@@ -1,6 +1,7 @@
 ## 2.0.1 (2022-06-23)
 * [internal] Made code more debuggable
 * [internal] Improved iterating through saved instances
+* [internal] Added test mode and DEBUG_MODE toggle
 * Improved 'Raid Complete' message
 * Updated Notes window to have background and better font size
 
