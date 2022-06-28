@@ -1,3 +1,8 @@
+local function skip() return { ["action"] = "skip" } end
+local function hide() return { ["action"] = "hide" } end
+local function show(v) return { ["action"] = "show", ["value"] = v } end
+local function skipIfNil(v) return not v and skip() or  show(v) end
+
 function encounterAsNotes(encounter)
     if not encounter then return nil end
 
@@ -9,11 +14,6 @@ function encounterAsNotes(encounter)
 
     return s
 end
-
-local function skip() return { ["action"] = "skip" } end
-local function hide() return { ["action"] = "hide" } end
-local function show(v) return { ["action"] = "show", ["value"] = v } end
-local function skipIfNil(v) return not v and skip() or  show(v) end
 
 function mapEncounterStart(encounterID)
     return skipIfNil(encounterAsNotes(encountersDb[encounterID]))

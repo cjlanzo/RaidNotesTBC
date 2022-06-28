@@ -14,11 +14,12 @@ RaidNotesTBC is an addon that allows you to set personal raid notes for each bos
 
 ## Todo
 
-* Make notes advance to the next trash section as a boss encounter begins (so you see current boss and the trash after it rather than before)
 * Allow customization of boss routing with an instance
+* Make notes advance to the next trash section as a boss encounter begins (so you see current boss and the trash after it rather than before)
 * Add options to allow customization of font size, notes opacity, etc
 * Add version outdated notification on login
 
 ## Known Issues
 
+* Instances like Black Temple won't load the correct boss due to skips. This will be addressed by the custom routing
 * Notes can be dragged off screen and it causes them to disappear. If you reload your UI it will reappear as a workaround for now
