@@ -50,10 +50,20 @@ function RaidNotes:InitJournal()
     local function loadData(self, key)
         debugPrint(string.format("Loading data for %s", key))
 
-        local notes = getEncounterNotes(getEncounterFromKey(key))
+        local encounterID = getEncounterFromKey(key)
+
+        if encounterID then treeGroup.content:Show() else treeGroup.content:Hide(); return end
+
+        local encounter = encountersDb[encounterID]
+        local notes = getEncounterNotes(encounterID)
+
+        _G["TrashEditBox"]:SetLabel(string.format("%s Trash", encounter.encounterName))
+        _G["BossEditBox"]:SetLabel(encounter.encounterName)
 
         _G["TrashEditBox"].editBox:SetText(notes.trash or "")
         _G["BossEditBox"].editBox:SetText(notes.boss or "")
+
+        RaidNotes:DisplayNotes(encounterAsNotes(encounter))
     end
 
     hooksecurefunc(treeGroup, "SetSelected", loadData)
@@ -62,12 +72,13 @@ function RaidNotes:InitJournal()
 
     RaidNotes:CreateNotesEdit(treeGroup, "Trash")
     RaidNotes:CreateNotesEdit(treeGroup, "Boss")
+
+    treeGroup.content:Hide()
 end
 
 function RaidNotes:CreateNotesEdit(parent, name)
-    editBox = AceGUI:Create("MultiLineEditBox")
+    local editBox = AceGUI:Create("MultiLineEditBox")
     _G[name.."EditBox"] = editBox
-    editBox:SetLabel(name)
     editBox:SetRelativeWidth(1)
     editBox:SetNumLines(11)
     parent:AddChild(editBox)
@@ -78,19 +89,13 @@ function RaidNotes:CreateNotesEdit(parent, name)
         self.editBox:ClearFocus()
 
         local encounterID = getEncounterFromKey(parent.localstatus.selected)
-        local noteType = string.lower(self.label:GetText())
+        local noteType = contains(self.label:GetText(), "Trash") and "trash" or "boss"
         local noteValue = self:GetText()
 
         debugPrint(string.format("Setting '%s' encounter notes for %d to '%s'", noteType, encounterID, noteValue))
 
         setEncounterNotes(encounterID, { [noteType] = noteValue })
-
-        local encounter = encountersDb[encounterID]
-
-        -- if we're editing the current encounter, update the notes for it
-        if instanceProgress[encounter.instanceID] == encounter.encounterIndex then
-            RaidNotes:DisplayEncounterNotes(encounter.encounterName, getEncounterNotes(encounterID))
-        end
+        RaidNotes:DisplayNotes(encounterAsNotes(encountersDb[encounterID]))
 
         if not self:Fire("OnEnterPressed", self.editBox:GetText()) then
             self.button:Disable()

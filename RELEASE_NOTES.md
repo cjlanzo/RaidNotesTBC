@@ -1,5 +1,13 @@
+## 2.0.1 (2022-06-27)
+* [internal] Made code more debuggable
+* [internal] Improved iterating through saved instances
+* [internal] Added test mode and DEBUG_MODE toggle
+* Improved 'Raid Complete' message
+* Updated Notes window to have background and better font size
+* Removed gap before boss notes when no trash notes existed
+
 ## 2.0.0 (2022-06-21)
-* Overhauled backend
+* [internal] Overhauled backend
 * Fixed issues with sunwell not working
 * Fixed issues where bosses that had multiple different bosses weren't working
 

@@ -4,6 +4,26 @@ function debugPrint(msg)
     print("|cffffff00RaidNotesTBC: |r"..msg)
 end
 
+function getZone(zone) return zone and zone or GetZoneText() end
+
+function getTarget(target) return target and target or (not UnitIsDead("target") and UnitName("target") or nil) end
+
+function getSavedInstanceInfo(index)
+    local savedInstanceName,_,_,_,_,_,_,_,_,_,_,encounterProgress = GetSavedInstanceInfo(index)
+    return savedInstanceName, encounterProgress
+end
+
+function iterSavedInstances(_, i)
+    i = i + 1
+    local a,b = getSavedInstanceInfo(i)
+
+    if a then return i, a, b end
+end
+
+function savedInstances()
+    return iterSavedInstances, {}, 0
+end
+
 -- Strings
 function split(s, delimiter)
     local result = {}
@@ -17,11 +37,13 @@ end
 
 function nullOrEmpty(s) return not s or s == "" end
 
+function contains(s, pattern) return string.find(s, pattern) ~= nil end
+
 -- Arrays
 function map(arr, fn)
     local t = {}
     
-    for k,v in pairs(arr) do
+    for _,v in pairs(arr) do
         table.insert(t, fn(v))
     end
     
@@ -134,4 +156,49 @@ function asArray(dict)
     end
 
     return arr
+end
+
+function isEmpty(dict) return not next(dict) end
+
+-- Args
+function packTable(...)
+    local t = { ... }
+    t.n = #t
+
+    return t
+end
+
+function unpackTable(t, start, stop)
+    if not start then start = 1 end
+    if not stop then stop = t.n end
+
+    if start == stop then return t[start]
+    else return t[start], unpackTable(t, start + 1, stop)
+    end
+end
+
+function sliceArgs(index, ...)
+    local t = {}
+    local arg = packTable(...)
+
+    if index > arg.n then return nil end
+
+    for i = index, arg.n do
+        t[i - index + 1] = arg[i]
+    end
+
+    t.n = arg.n - index + 1
+
+    return unpackTable(t)
+end
+
+function argsToString(...)
+    local t = {}
+    local arg = packTable(...)
+
+    for i = 1, arg.n do
+        t[i] = tostring(arg[i])
+    end
+
+    return table.concat(t, " - ")
 end
