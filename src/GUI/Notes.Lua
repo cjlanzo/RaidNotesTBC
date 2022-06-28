@@ -4,7 +4,6 @@ local AceGUI = _G.LibStub("AceGUI-3.0")
 local f
 
 function RaidNotes:LockNotes()
-    f.frame:DisableDrawLayer("BACKGROUND")
     f.frame:DisableDrawLayer("BORDER")
     f.frame:SetResizable(false)
     f.frame:SetMovable(false)
@@ -14,12 +13,12 @@ function RaidNotes:LockNotes()
     f.sizer_s:Hide()
     f.title:Hide()
     f.titletext:Hide()
+    f.titlebg:Hide()
 end
 
 function RaidNotes:UnlockNotes()
     if not f then self:InitNotes() end
     
-    f.frame:EnableDrawLayer("BACKGROUND")
     f.frame:EnableDrawLayer("BORDER")
     f.frame:SetResizable(true)
     f.frame:SetMovable(true)
@@ -29,14 +28,16 @@ function RaidNotes:UnlockNotes()
     f.sizer_s:Show()
     f.title:Show()
     f.titletext:Show()
+    f.titlebg:Show()
 end
 
 function RaidNotes:InitNotes()
-    f = AceGUI:Create("Window")
+    f = AceGUI:Create("NotesWidget")
     f:Hide()
     f:SetTitle("Drag me")
     f.frame:SetFrameStrata("BACKGROUND")
     f.frame:EnableMouse(false)
+    f.dialogbg:SetAlpha(0.5)
 
     local framePos = RaidNotes:LoadFramePosition()
     f:ClearAllPoints()
@@ -46,63 +47,23 @@ function RaidNotes:InitNotes()
 
     RaidNotes:LockNotes()
 
-    self:CreateNotesLabel(f, "TitleHeader")
-    self:CreateNotesLabelGroup(f, "Trash")
-    self:CreateNotesLabelGroup(f, "Boss")
-    
-    _G["NotesMainFrame"] = f
-end
-
-function RaidNotes:CreateNotesLabelGroup(parent, name)
-    local group = AceGUI:Create("SimpleGroup")
-    group:SetRelativeWidth(1)
-
-    RaidNotes:CreateNotesLabel(group, name.."Spacer", "\n")
-    RaidNotes:CreateNotesLabel(group, name.."Header", name.." Notes:")
-    RaidNotes:CreateNotesLabel(group, name.."Notes")
-
-    _G["Notes"..name.."Group"] = group
-    parent:AddChild(group)
-end
-
-function RaidNotes:CreateNotesLabel(parent, name, text)
     local label = AceGUI:Create("Label")
-    label:SetFontObject(GameFontNormalLarge)
+    label:SetFont("Fonts\\ARIALN.ttf", 16)
     label:SetRelativeWidth(1)
 
-    if text then label:SetText(text) end
+    _G["NotesText"] = label
+    f:AddChild(label)
 
-    _G["Notes"..name] = label
-
-    parent:AddChild(label)
+    RaidNotes:DisplayNotes("Trash:\n- Sample trash\n\nBoss:\n- Sample boss\n\n")
 end
 
-function RaidNotes:DisplayEncounterNotes(encounterName, notes)
+function RaidNotes:DisplayNotes(str)
     if not f then self:InitNotes() end
 
-    local function hideIfEmpty(groupName)
-        -- these ids suck
-        local text = _G[string.format("Notes%sNotes", groupName)].label:GetText()
-        local group = _G[string.format("Notes%sGroup", groupName)].frame
-        group:Show()
-
-        if nullOrEmpty(text) then
-            group:Hide()
-        end
-    end
+    debugPrint("Called RaidNotes:DisplayNotes()")
 
     self:ShowNotes()
-
-    debugPrint(string.format("Displaying notes for '%s'", encounterName))
-
-    _G["NotesTitleHeader"]:SetText(string.format("-= %s =-", encounterName))
-    _G["NotesTrashNotes"]:SetText(notes.trash or "")
-    _G["NotesBossNotes"]:SetText(notes.boss or "")
-
-    f:DoLayout()
-
-    hideIfEmpty("Trash")
-    hideIfEmpty("Boss")
+   _G["NotesText"]:SetText(str)
 end
 
 function RaidNotes:ShowNotes()
@@ -112,7 +73,10 @@ function RaidNotes:ShowNotes()
 end
 
 function RaidNotes:HideNotes() 
-    if f then f:Hide() end
+    if f then 
+        debugPrint("Called RaidNotes:Hide()")
+        f:Hide()
+    end
 end
 
 function RaidNotes:ToggleNotes()
