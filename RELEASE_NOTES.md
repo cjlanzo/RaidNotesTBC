@@ -1,3 +1,6 @@
+## 2.0.2 (2022-07-01)
+* Fixed bug where fresh instance would not load the first boss properly
+
 ## 2.0.1 (2022-06-27)
 * [internal] Made code more debuggable
 * [internal] Improved iterating through saved instances

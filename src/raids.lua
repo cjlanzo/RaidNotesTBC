@@ -24,7 +24,7 @@ function getCurrentEncounterByInstance(instance)
         end
     end
 
-    return nil
+    return findByEncounterIndex(instance.instanceID, 1)
 end
 
 function getNextEncounter(encounterID)
