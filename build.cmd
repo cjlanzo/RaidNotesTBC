@@ -2,7 +2,7 @@
 cls
 
 set target=%1
-set addon_folder="C:\Program Files (x86)\World of Warcraft\_classic_\Interface\AddOns\RaidNotesTBC"
+set addon_folder="C:\Program Files (x86)\World of Warcraft\_classic_\Interface\AddOns\RaidNotes"
 
 if exist build rmdir /Q /S build
 mkdir build
@@ -23,6 +23,6 @@ if %target% == publish (
 if %target% == release (
     if exist release rmdir /Q /S release
     mkdir release
-    mkdir release\RaidNotesTBC
-    xcopy build release\RaidNotesTBC /E
+    mkdir release\RaidNotes
+    xcopy build release\RaidNotes /E
 )

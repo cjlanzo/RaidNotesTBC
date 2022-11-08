@@ -1,8 +1,8 @@
-# RaidNotesTBC
+# RaidNotes
 
 ## Overview
 
-RaidNotesTBC is an addon that allows you to set personal raid notes for each boss within all TBC raids. Additionally, you can set notes for trash sections that come before each boss. The addon will handle progressing the notes as you clear the instance.
+RaidNotes is an addon that allows you to set personal raid notes for each boss within all raids. Additionally, you can set notes for trash sections that come before each boss. The addon will handle progressing the notes as you clear the instance. This addon currently only works for 25m raids.
 
 ## Usage
 
@@ -21,5 +21,4 @@ RaidNotesTBC is an addon that allows you to set personal raid notes for each bos
 
 ## Known Issues
 
-* Instances like Black Temple won't load the correct boss due to skips. This will be addressed by the custom routing
 * Notes can be dragged off screen and it causes them to disappear. If you reload your UI it will reappear as a workaround for now

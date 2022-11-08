@@ -1,7 +1,7 @@
 -- Addon helpers
 function debugPrint(msg)
     if not DEBUG_MODE then return end
-    print("|cffffff00RaidNotesTBC: |r"..msg)
+    print("|cffffff00RaidNotes: |r"..msg)
 end
 
 function getZone(zone) return zone and zone or GetZoneText() end

@@ -3,12 +3,23 @@ local libDBIcon     = _G.LibStub("LibDBIcon-1.0")
 local AceSerializer = _G.LibStub("AceSerializer-3.0")
 
 function RaidNotes:OnInitialize()
-    self.db = _G.LibStub("AceDB-3.0"):New(
-        ADDON_NAME, {
-            profile = { minimapButton = { hide = false } }
-        })
+    self.db = _G.LibStub("AceDB-3.0"):New(ADDON_NAME, {
+        profile = { 
+            minimapButton = { hide = false } 
+        },
+        char = {
+            encounters = {},
+            framePos = {
+                ["point"]  = "CENTER",
+                ["xOfs"]   = -640,
+                ["yOfs"]   = 0,
+                ["width"]  = 400,
+                ["height"] = 400
+            }
+        }
+    })
 
-    self:Print("Welcome to RaidNotesTBC")
+    self:Print("Welcome to RaidNotes")
 
     local options = {
         name = ADDON_NAME,
@@ -31,7 +42,6 @@ function RaidNotes:OnInitialize()
     }
 
     LibStub("AceConfig-3.0"):RegisterOptionsTable(ADDON_NAME, options, { "raidnotes" })
-
     initEncounterNotes(self.db.char)
 
     local eventMap = {
@@ -68,16 +78,7 @@ function RaidNotes:ToggleDebug()
 end
 
 function RaidNotes:LoadFramePosition()
-    if self.db.char.framePos then return self.db.char.framePos 
-    else
-        return {
-            ["point"]  = "CENTER",
-            ["xOfs"]   = -640,
-            ["yOfs"]   = 0,
-            ["width"]  = 400,
-            ["height"] = 400
-        }
-    end
+    return self.db.char.framePos
 end
 
 function RaidNotes:PLAYER_LOGOUT()
@@ -99,7 +100,7 @@ function RaidNotes:DrawMinimapIcon()
                     RaidNotes:ToggleJournal()
                 end,
                 OnTooltipShow = function(tooltip)
-                    tooltip:AddLine("RaidNotesTBC - Left click to toggle")
+                    tooltip:AddLine("RaidNotes - Left click to toggle")
                 end
             }),
         self.db.profile.minimapButton

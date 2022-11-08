@@ -1,3 +1,6 @@
+## 3.0.0 (2022-11-07)
+* Wotlk support for 25m raids
+
 ## 2.0.2 (2022-07-01)
 * Fixed bug where fresh instance would not load the first boss properly
 
