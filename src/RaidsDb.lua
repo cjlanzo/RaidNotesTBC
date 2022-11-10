@@ -1,10 +1,10 @@
-instancesDb = {
+InstancesDb = {
     [533] = { instanceID = 533, instanceName = "Naxxramas", savedInstanceName = "Naxxramas", instanceIndex = 1 },
     [615] = { instanceID = 615, instanceName = "The Obsidian Sanctum", savedInstanceName = "The Obsidian Sanctum", instanceIndex = 2 },
     [616] = { instanceID = 616, instanceName = "The Eye of Eternity", savedInstanceName = "The Eye of Eternity", instanceIndex = 3 },
 }
 
-encountersDb = {
+EncountersDb = {
     [1107] = { encounterID = 1107, encounterName = "Anub'Rekhan", instanceID = 533, alternativeTargets = {}, encounterIndex = 1 },
     [1110] = { encounterID = 1110, encounterName = "Grand Widow Faerlina", instanceID = 533, alternativeTargets = {}, encounterIndex = 2 },
     [1116] = { encounterID = 1116, encounterName = "Maexxna", instanceID = 533, alternativeTargets = {}, encounterIndex = 3 },

@@ -1,3 +1,6 @@
+## 3.1.0 (2022-11-10)
+* Added ability to set raid order for custom routing
+
 ## 3.0.0 (2022-11-07)
 * Wotlk support for 25m raids
 

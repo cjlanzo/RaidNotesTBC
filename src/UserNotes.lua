@@ -1,15 +1,18 @@
-encounterNotes = {}
+EncounterNotes = {}
 
-function initEncounterNotes(dbProfile) encounterNotes = dbProfile.encounters or {} end
+function InitEncounterNotes(dbProfile) EncounterNotes = dbProfile.encounters or {} end
 
-function getEncounterFromKey(key) return tonumber(split(key, "\001")[2]) end
+function SplitKey(key) 
+    local keyArr = split(key, "\001")
+    return tonumber(keyArr[1]), tonumber(keyArr[2])
+end
 
-function getEncounterNotes(encounterID) return encounterNotes[encounterID] or {} end
+function GetEncounterNotes(encounterID) return EncounterNotes[encounterID] or {} end
 
-function setEncounterNotes(encounterID, notes)
-    local existingNotes = getEncounterNotes(encounterID)
+function SetEncounterNotes(encounterID, notes)
+    local existingNotes = GetEncounterNotes(encounterID)
 
-    encounterNotes[encounterID] = {
+    EncounterNotes[encounterID] = {
         ["trash"] = notes.trash or existingNotes.trash,
         ["boss"] = notes.boss or existingNotes.boss,
     }

@@ -4,11 +4,11 @@ local AceGUI = _G.LibStub("AceGUI-3.0")
 local f
 
 local function createTree()
-    local sortedInstances = sortBy(asArray(instancesDb), function (instance) return instance.instanceIndex end)
+    local sortedInstances = sortBy(asArray(InstancesDb), function (instance) return instance.instanceIndex end)
 
     return map(sortedInstances, function(instance)
         local sortedEncounters = 
-            sortBy(instanceEncountersLookup[instance.instanceID], function(e) 
+            sortBy(InstanceEncountersLookup[instance.instanceID], function(e) 
                 return e.encounterIndex
             end)
 
@@ -50,12 +50,32 @@ function RaidNotes:InitJournal()
     local function loadData(self, key)
         debugPrint(string.format("Loading data for %s", key))
 
-        local encounterID = getEncounterFromKey(key)
+        local instanceID, encounterID = SplitKey(key)
 
-        if encounterID then treeGroup.content:Show() else treeGroup.content:Hide(); return end
+        if not encounterID then
+            treeGroup.content:Hide()
+            return
+        end
 
-        local encounter = encountersDb[encounterID]
-        local notes = getEncounterNotes(encounterID)
+        treeGroup.content:Show()
+
+        local encounter = EncountersDb[encounterID]
+        local notes = GetEncounterNotes(encounterID)
+        local raidOrderTable = RaidNotes:GetRaidOrder(instanceID)
+
+        local dropdownContents = {}
+        local dropdownValue = raidOrderTable[encounterID]
+        local numEncounters = 0
+
+        for _,v in pairs(EncountersDb) do
+            if (v.instanceID == instanceID) then
+                numEncounters = numEncounters + 1
+                table.insert(dropdownContents, numEncounters)
+            end
+        end
+
+        _G["OrderDropdown"]:SetList(dropdownContents)
+        _G["OrderDropdown"]:SetValue(dropdownValue)
 
         _G["TrashEditBox"]:SetLabel(string.format("%s Trash", encounter.encounterName))
         _G["BossEditBox"]:SetLabel(encounter.encounterName)
@@ -70,17 +90,31 @@ function RaidNotes:InitJournal()
 
     f:AddChild(treeGroup)
 
+    RaidNotes:CreateOrderDropdown(treeGroup)
     RaidNotes:CreateNotesEdit(treeGroup, "Trash")
     RaidNotes:CreateNotesEdit(treeGroup, "Boss")
 
     treeGroup.content:Hide()
 end
 
+function RaidNotes:CreateOrderDropdown(parent)
+    local dropdown = AceGUI:Create("Dropdown")
+    dropdown:SetLabel("Order")
+
+    hooksecurefunc(dropdown, "SetValue", function(self, value)
+        local instanceID, encounterID = SplitKey(self.parent.localstatus.selected)
+        RaidNotes:SetRaidOrderForEncounter(instanceID, encounterID, value)
+    end)
+
+    _G["OrderDropdown"] = dropdown
+    parent:AddChild(dropdown)
+end
+
 function RaidNotes:CreateNotesEdit(parent, name)
     local editBox = AceGUI:Create("MultiLineEditBox")
     _G[name.."EditBox"] = editBox
     editBox:SetRelativeWidth(1)
-    editBox:SetNumLines(11)
+    editBox:SetNumLines(10)
     parent:AddChild(editBox)
 
     -- figure out if we can replace this with a hooksecurefunc without having to duplicate the code
@@ -88,14 +122,14 @@ function RaidNotes:CreateNotesEdit(parent, name)
         self = self.obj
         self.editBox:ClearFocus()
 
-        local encounterID = getEncounterFromKey(parent.localstatus.selected)
+        local _, encounterID = SplitKey(parent.localstatus.selected)
         local noteType = contains(self.label:GetText(), "Trash") and "trash" or "boss"
         local noteValue = self:GetText()
 
         debugPrint(string.format("Setting '%s' encounter notes for %d to '%s'", noteType, encounterID, noteValue))
 
-        setEncounterNotes(encounterID, { [noteType] = noteValue })
-        RaidNotes:DisplayNotes(encounterAsNotes(encountersDb[encounterID]))
+        SetEncounterNotes(encounterID, { [noteType] = noteValue })
+        RaidNotes:DisplayNotes(encounterAsNotes(EncountersDb[encounterID]))
 
         if not self:Fire("OnEnterPressed", self.editBox:GetText()) then
             self.button:Disable()

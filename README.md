@@ -11,6 +11,7 @@ RaidNotes is an addon that allows you to set personal raid notes for each boss w
 * With the editor open - drag/resize the notes pane (this is where notes will show up)
 * When you enter an instance that it recognizes it will display notes for the first boss
 * As you progress through the instance it will automatically update which notes are displayed. Triggers include when a boss begins, ends, or is targeted
+* You can set the boss order via the order dropdown on each boss page to control the order that the notes pop up in
 
 ## Todo
 
@@ -22,3 +23,4 @@ RaidNotes is an addon that allows you to set personal raid notes for each boss w
 ## Known Issues
 
 * Notes can be dragged off screen and it causes them to disappear. If you reload your UI it will reappear as a workaround for now
+* Probably some bugs surrounding setting duplicate raid order numbers

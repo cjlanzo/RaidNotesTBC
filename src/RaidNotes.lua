@@ -15,6 +15,31 @@ function RaidNotes:OnInitialize()
                 ["yOfs"]   = 0,
                 ["width"]  = 400,
                 ["height"] = 400
+            },
+            raidOrder = {
+                [533] = {
+                    [1107] = 1,
+                    [1110] = 2,
+                    [1116] = 3,
+                    [1118] = 4,
+                    [1111] = 5,
+                    [1108] = 6,
+                    [1120] = 7,
+                    [1117] = 8,
+                    [1112] = 9,
+                    [1115] = 10,
+                    [1113] = 11,
+                    [1109] = 12,
+                    [1121] = 13,
+                    [1119] = 14,
+                    [1114] = 15,
+                },
+                [615] = {
+                    [1090] = 1,
+                },
+                [616] = {
+                    [1094] = 1
+                }
             }
         }
     })
@@ -42,7 +67,7 @@ function RaidNotes:OnInitialize()
     }
 
     LibStub("AceConfig-3.0"):RegisterOptionsTable(ADDON_NAME, options, { "raidnotes" })
-    initEncounterNotes(self.db.char)
+    InitEncounterNotes(self.db.char)
 
     local eventMap = {
         ["ENCOUNTER_START"]       = mapEncounterStart,
@@ -81,12 +106,20 @@ function RaidNotes:LoadFramePosition()
     return self.db.char.framePos
 end
 
-function RaidNotes:PLAYER_LOGOUT()
-    self.db.char.framePos = RaidNotes:GetNotesFramePosition()
-    self.db.char.encounters = encounterNotes
+function RaidNotes:GetRaidOrder(instanceID)
+    return self.db.char.raidOrder[instanceID]
 end
 
-function RaidNotes:ShouldDisplayNotes() return instanceNameLookup[getZone()] end
+function RaidNotes:SetRaidOrderForEncounter(instanceID, encounterID, value)
+    self.db.char.raidOrder[instanceID][encounterID] = value
+end
+
+function RaidNotes:PLAYER_LOGOUT()
+    self.db.char.framePos = RaidNotes:GetNotesFramePosition()
+    self.db.char.encounters = EncounterNotes
+end
+
+function RaidNotes:ShouldDisplayNotes() return InstanceNameLookup[getZone()] end
 
 function RaidNotes:DrawMinimapIcon()
     libDBIcon:Register(
