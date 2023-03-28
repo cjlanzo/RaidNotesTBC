@@ -1,3 +1,7 @@
+## 3.2.0 (2023-03-28)
+* Added Ulduar
+* Fixed bugs related to WoW API updates
+
 ## 3.1.0 (2022-11-10)
 * Added ability to set raid order for custom routing
 
