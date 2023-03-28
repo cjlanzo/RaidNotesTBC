@@ -1,4 +1,4 @@
-## Interface: 30400
+## Interface: 30401
 ## Title: RaidNotes
 ## Version: 3.1.0
 ## Notes: An addon for managing personal raid notes
