@@ -1,7 +1,8 @@
 InstancesDb = {
-    [533] = { instanceID = 533, instanceName = "Naxxramas", savedInstanceName = "Naxxramas", instanceIndex = 1 },
-    [615] = { instanceID = 615, instanceName = "The Obsidian Sanctum", savedInstanceName = "The Obsidian Sanctum", instanceIndex = 2 },
-    [616] = { instanceID = 616, instanceName = "The Eye of Eternity", savedInstanceName = "The Eye of Eternity", instanceIndex = 3 },
+    [603] = { instanceID = 603, instanceName = "Ulduar", savedInstanceName = "Ulduar", instanceIndex = 1 },
+    [533] = { instanceID = 533, instanceName = "Naxxramas", savedInstanceName = "Naxxramas", instanceIndex = 2 },
+    [615] = { instanceID = 615, instanceName = "The Obsidian Sanctum", savedInstanceName = "The Obsidian Sanctum", instanceIndex = 3 },
+    [616] = { instanceID = 616, instanceName = "The Eye of Eternity", savedInstanceName = "The Eye of Eternity", instanceIndex = 4 },
 }
 
 EncountersDb = {
@@ -22,4 +23,18 @@ EncountersDb = {
     [1114] = { encounterID = 1114, encounterName = "Kel'Thuzad", instanceID = 533, alternativeTargets = {}, encounterIndex = 15 },
     [1090] = { encounterID = 1090, encounterName = "Sartharion", instanceID = 615, alternativeTargets = {}, encounterIndex = 1 },
     [1094] = { encounterID = 1094, encounterName = "Malygos", instanceID = 616, alternativeTargets = {}, encounterIndex = 1 },
+    [744] = { encounterID = 744, encounterName = "Flame Leviathan", instanceID = 603, alternativeTargets = {}, encounterIndex = 1 },
+    [746] = { encounterID = 746, encounterName = "Razorscale", instanceID = 603, alternativeTargets = {}, encounterIndex = 2 },
+    [745] = { encounterID = 745, encounterName = "Ignis the Furnace Master", instanceID = 603, alternativeTargets = {}, encounterIndex = 3 },
+    [747] = { encounterID = 747, encounterName = "XT-002 Deconstructor", instanceID = 603, alternativeTargets = {}, encounterIndex = 4 },
+    [748] = { encounterID = 748, encounterName = "Assembly of Iron", instanceID = 603, alternativeTargets = {}, encounterIndex = 5 },
+    [757] = { encounterID = 757, encounterName = "Algalon the Observer", instanceID = 603, alternativeTargets = {}, encounterIndex = 6 },
+    [749] = { encounterID = 749, encounterName = "Kologarn", instanceID = 603, alternativeTargets = {}, encounterIndex = 7 },
+    [750] = { encounterID = 750, encounterName = "Auriaya", instanceID = 603, alternativeTargets = {}, encounterIndex = 8 },
+    [751] = { encounterID = 751, encounterName = "Hodir", instanceID = 603, alternativeTargets = {}, encounterIndex = 9 },
+    [752] = { encounterID = 752, encounterName = "Thorim", instanceID = 603, alternativeTargets = {}, encounterIndex = 10 },
+    [753] = { encounterID = 753, encounterName = "Freya", instanceID = 603, alternativeTargets = {}, encounterIndex = 11 },
+    [754] = { encounterID = 754, encounterName = "Mimiron", instanceID = 603, alternativeTargets = {}, encounterIndex = 12 },
+    [755] = { encounterID = 755, encounterName = "General Vezax", instanceID = 603, alternativeTargets = {}, encounterIndex = 13 },
+    [756] = { encounterID = 756, encounterName = "Yogg-Saron", instanceID = 603, alternativeTargets = {}, encounterIndex = 14 },
 }

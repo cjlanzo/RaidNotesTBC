@@ -48,7 +48,7 @@ function RaidNotes:InitNotes()
     RaidNotes:LockNotes()
 
     local label = AceGUI:Create("Label")
-    label:SetFont("Fonts\\ARIALN.ttf", 16)
+    label:SetFont("Fonts\\ARIALN.ttf", 16, "")
     label:SetRelativeWidth(1)
 
     _G["NotesText"] = label
