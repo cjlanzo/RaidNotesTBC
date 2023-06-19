@@ -1,3 +1,6 @@
+## 3.3.0 (2023-06-20)
+* Added ToGC
+
 ## 3.2.0 (2023-03-28)
 * Added Ulduar
 * Fixed bugs related to WoW API updates

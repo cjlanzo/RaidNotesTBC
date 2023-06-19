@@ -3,6 +3,7 @@ InstancesDb = {
     [533] = { instanceID = 533, instanceName = "Naxxramas", savedInstanceName = "Naxxramas", instanceIndex = 2 },
     [615] = { instanceID = 615, instanceName = "The Obsidian Sanctum", savedInstanceName = "The Obsidian Sanctum", instanceIndex = 3 },
     [616] = { instanceID = 616, instanceName = "The Eye of Eternity", savedInstanceName = "The Eye of Eternity", instanceIndex = 4 },
+    [649] = { instanceID = 649, instanceName = "Trial of the Crusader", savedInstanceName = "Trial of the Crusader", instanceIndex = 5 },
 }
 
 EncountersDb = {
@@ -37,4 +38,9 @@ EncountersDb = {
     [754] = { encounterID = 754, encounterName = "Mimiron", instanceID = 603, alternativeTargets = {}, encounterIndex = 12 },
     [755] = { encounterID = 755, encounterName = "General Vezax", instanceID = 603, alternativeTargets = {}, encounterIndex = 13 },
     [756] = { encounterID = 756, encounterName = "Yogg-Saron", instanceID = 603, alternativeTargets = {}, encounterIndex = 14 },
+    [629] = { encounterID = 629, encounterName = "Northrend Beasts", instanceID = 649, alternativeTargets = {}, encounterIndex = 1 },
+    [633] = { encounterID = 633, encounterName = "Lord Jaraxxus", instanceID = 649, alternativeTargets = {}, encounterIndex = 2 },
+    [637] = { encounterID = 637, encounterName = "Faction Champions", instanceID = 649, alternativeTargets = {}, encounterIndex = 3 },
+    [641] = { encounterID = 641, encounterName = "Val'kyr Twins", instanceID = 649, alternativeTargets = {}, encounterIndex = 4 },
+    [645] = { encounterID = 645, encounterName = "Anub'arak", instanceID = 649, alternativeTargets = {}, encounterIndex = 5 },
 }
