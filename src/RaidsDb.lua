@@ -4,6 +4,7 @@ InstancesDb = {
     [615] = { instanceID = 615, instanceName = "The Obsidian Sanctum", savedInstanceName = "The Obsidian Sanctum", instanceIndex = 3 },
     [616] = { instanceID = 616, instanceName = "The Eye of Eternity", savedInstanceName = "The Eye of Eternity", instanceIndex = 4 },
     [649] = { instanceID = 649, instanceName = "Trial of the Crusader", savedInstanceName = "Trial of the Crusader", instanceIndex = 5 },
+    [631] = { instanceID = 631, instanceName = "Icecrown Citadel", savedInstanceName = "Icecrown Citadel", instanceIndex = 6 },
 }
 
 EncountersDb = {
@@ -43,4 +44,17 @@ EncountersDb = {
     [637] = { encounterID = 637, encounterName = "Faction Champions", instanceID = 649, alternativeTargets = {}, encounterIndex = 3 },
     [641] = { encounterID = 641, encounterName = "Val'kyr Twins", instanceID = 649, alternativeTargets = {}, encounterIndex = 4 },
     [645] = { encounterID = 645, encounterName = "Anub'arak", instanceID = 649, alternativeTargets = {}, encounterIndex = 5 },
+    
+    [845] = { encounterID = 845, encounterName = "Lord Marrowgar", instanceID = 631, alternativeTargets = {}, encounterIndex = 1 },
+    [846] = { encounterID = 846, encounterName = "Lady Deathwhisper", instanceID = 631, alternativeTargets = {}, encounterIndex = 2 },
+    [847] = { encounterID = 847, encounterName = "Gunship Battle", instanceID = 631, alternativeTargets = {}, encounterIndex = 3 },
+    [848] = { encounterID = 848, encounterName = "Deathbringer Saurfang", instanceID = 631, alternativeTargets = {}, encounterIndex = 4 },
+    [849] = { encounterID = 849, encounterName = "Festergut", instanceID = 631, alternativeTargets = {}, encounterIndex = 5 },
+    [850] = { encounterID = 850, encounterName = "Rotface", instanceID = 631, alternativeTargets = {}, encounterIndex = 6 },
+    [851] = { encounterID = 851, encounterName = "Professor Putricide", instanceID = 631, alternativeTargets = {}, encounterIndex = 7 },
+    [852] = { encounterID = 852, encounterName = "Blood Prince Council", instanceID = 631, alternativeTargets = {}, encounterIndex = 8 },
+    [853] = { encounterID = 853, encounterName = "Blood-Queen Lana'thel", instanceID = 631, alternativeTargets = {}, encounterIndex = 9 },
+    [854] = { encounterID = 854, encounterName = "Valithria Dreamwalker", instanceID = 631, alternativeTargets = {}, encounterIndex = 10 },
+    [855] = { encounterID = 855, encounterName = "Sindragosa", instanceID = 631, alternativeTargets = {}, encounterIndex = 11 },
+    [856] = { encounterID = 856, encounterName = "The Lich King", instanceID = 631, alternativeTargets = {}, encounterIndex = 12 },
 }
