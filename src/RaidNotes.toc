@@ -1,6 +1,6 @@
-## Interface: 30500
+## Interface: 30403
 ## Title: RaidNotes
-## Version: 3.4.0
+## Version: 3.4.1
 ## Notes: An addon for managing personal raid notes
 ## Author: Voodoomoose
 ## SavedVariables: RaidNotes

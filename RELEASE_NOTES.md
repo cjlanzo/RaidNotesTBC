@@ -1,3 +1,7 @@
+## 3.4.1 (2023-10-18)
+
+- Corrected toc version
+
 ## 3.4.0 (2023-08-29)
 
 - Added ICC
