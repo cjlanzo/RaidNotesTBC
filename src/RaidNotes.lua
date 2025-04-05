@@ -82,24 +82,34 @@ function RaidNotes:OnInitialize()
         }
     })
 
-    self:Print("Welcome to RaidNotes")
-
     local options = {
         name = ADDON_NAME,
         handler = RaidNotes,
         type = "group",
         args = {
-            toggleDebug = {
+            toggleMinimap = {
                 type = "execute",
-                name = "Toggle Debug",
-                desc = "Toggles DEBUG_MODE on/off",
-                func = "ToggleDebug"
+                name = "Toggle Minimap",
+                desc = "Toggles the minimap icon",
+                func = "ToggleMinimapButton"
             },
-            runtests = {
+            edit = {
                 type = "execute",
-                name = "Run Tests",
-                desc = "Run addon tests",
-                func = "RunTests"
+                name = "Open Journal",
+                desc = "Opens the journal",
+                func = "ToggleJournal"
+            },
+            show = {
+                type = "execute",
+                name = "Show Notes",
+                desc = "Displays the notes",
+                func = "ShowNotes",
+            },
+            hide = {
+                type = "execute",
+                name = "Hide Notes",
+                desc = "Hides the notes",
+                func = "HideNotes",
             }
         }
     }
