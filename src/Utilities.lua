@@ -1,7 +1,7 @@
 -- Addon helpers
 function debugPrint(msg)
     if not DEBUG_MODE then return end
-    print("|cffffff00RaidNotesTBC: |r"..msg)
+    print("|cffffff00RaidNotes: |r"..msg)
 end
 
 function getZone(zone) return zone and zone or GetZoneText() end
@@ -9,15 +9,15 @@ function getZone(zone) return zone and zone or GetZoneText() end
 function getTarget(target) return target and target or (not UnitIsDead("target") and UnitName("target") or nil) end
 
 function getSavedInstanceInfo(index)
-    local savedInstanceName,_,_,_,_,_,_,_,_,_,_,encounterProgress = GetSavedInstanceInfo(index)
-    return savedInstanceName, encounterProgress
+    local savedInstanceName,_,_,_,_,_,_,_,raidDifficulty,_,_,encounterProgress = GetSavedInstanceInfo(index)
+    return savedInstanceName, encounterProgress, raidDifficulty
 end
 
 function iterSavedInstances(_, i)
     i = i + 1
-    local a,b = getSavedInstanceInfo(i)
+    local a,b,c = getSavedInstanceInfo(i)
 
-    if a then return i, a, b end
+    if a and (c == 25) then return i, a, b end
 end
 
 function savedInstances()
