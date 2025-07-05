@@ -1,3 +1,7 @@
+## 4.0.0 (2025-04-05)
+
+- Updated for classic
+
 ## 3.4.1 (2023-10-18)
 
 - Corrected toc version

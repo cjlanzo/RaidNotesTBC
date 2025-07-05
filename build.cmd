@@ -2,8 +2,8 @@
 cls
 
 set target=%1
-set addon_folder="C:\Program Files (x86)\World of Warcraft\_classic_\Interface\AddOns\RaidNotes"
-set ptr_addon_folder="C:\Program Files (x86)\World of Warcraft\_classic_ptr_\Interface\AddOns\RaidNotes"
+set addon_folder="C:\Program Files (x86)\World of Warcraft\_classic_era_\Interface\AddOns\RaidNotes"
+set ptr_addon_folder="C:\Program Files (x86)\World of Warcraft\_classic_era_ptr_\Interface\AddOns\RaidNotes"
 
 if exist build rmdir /Q /S build
 mkdir build
